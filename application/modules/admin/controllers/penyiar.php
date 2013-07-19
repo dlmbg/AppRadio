@@ -9,7 +9,7 @@ class penyiar extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_penyiar($GLOBALS['site_limit_small'],$uri);
 			
@@ -26,7 +26,7 @@ class penyiar extends CI_Controller {
  
    public function tambah()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['penyiar'] = "";
 			
@@ -46,7 +46,7 @@ class penyiar extends CI_Controller {
  
    public function edit($id_param)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_penyiar'] = $id_param;
 			$get = $this->db->get_where("dlmbg_penyiar",$where)->row();
@@ -69,7 +69,7 @@ class penyiar extends CI_Controller {
  
    public function simpan()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$tipe = $this->input->post("tipe");
 			$id['id_penyiar'] = $this->input->post("id_param");
@@ -95,7 +95,7 @@ class penyiar extends CI_Controller {
  
 	public function hapus($id_param)
 	{
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_penyiar'] = $id_param;
 			$this->db->delete("dlmbg_penyiar",$where);

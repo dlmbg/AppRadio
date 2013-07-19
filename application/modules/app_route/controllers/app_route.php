@@ -10,7 +10,8 @@ class App_Route extends CI_Controller {
 	 
 	public function index()
 	{
-		$st = $this->session->userdata('level');
+		//$st = $this->session->userdata('level');
+		$st = "admin";
 		redirect($st);
 	}
 }

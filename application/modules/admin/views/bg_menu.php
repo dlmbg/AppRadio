@@ -15,8 +15,10 @@
 						<li class="divider-vertical"></li>
 						<li class="active"><a href="<?php echo base_url(); ?>"><i class="icon-home"></i> Dashboard</a></li>
 						<li class="divider-vertical"></li>
+						<?php if($this->session->userdata("level")=="admin"){?>
 						<li><a href="<?php echo base_url(); ?>admin/sistem"><i class="icon-wrench"></i> System</a></li>
 						<li class="divider-vertical"></li>
+						<?php } ?>
 						<li><a href="<?php echo base_url(); ?>admin/pelanggan"><i class="icon-tasks"></i> Pelanggan</a></li>
 						<li class="divider-vertical"></li>
 						<li><a href="<?php echo base_url(); ?>admin/hari"><i class="icon-leaf"></i> Hari</a></li>
@@ -105,9 +107,11 @@
 				<li>
 					<a href="<?php echo base_url(); ?>admin/grafik"><span class="icon-th-large"></span>Grafik</a>
 				</li>
+						<?php if($this->session->userdata("level")=="admin"){?>
 				<li>
 					<a href="<?php echo base_url(); ?>admin/user"><span class="icon-cog"></span>Data User</a>
 				</li>
+						<?php } ?>
 			</ul>
 		</div>
 		<div class="icon-caret-down"></div>

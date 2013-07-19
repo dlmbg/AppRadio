@@ -9,7 +9,7 @@ class transaksi_jadwal extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_transaksi($GLOBALS['site_limit_small'],$uri);
 			
@@ -26,10 +26,10 @@ class transaksi_jadwal extends CI_Controller {
  
    public function edit($id_param)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_transaksi_jadwal'] = $id_param;
-			$get = $this->db->query("select * from dlmbg_transaksi_jadwal a left join (SELECT `id_transaksi_pemasangan`, `nama_pelanggan`, alamat_pelanggan, `promo`, `st`, `prime_time`, `regular_time`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan left join dlmbg_penyiar d on a.id_penyiar=d.id_penyiar where id_transaksi_jadwal='".$id_param."' ")->row();
+			$get = $this->db->query("select * from dlmbg_transaksi_jadwal a left join (SELECT `id_transaksi_pemasangan`, `nama_pelanggan`, alamat_pelanggan, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan left join dlmbg_penyiar d on a.id_penyiar=d.id_penyiar where id_transaksi_jadwal='".$id_param."' ")->row();
 			
 
 			$d['penyiar'] = $this->db->get("dlmbg_penyiar");
@@ -40,10 +40,8 @@ class transaksi_jadwal extends CI_Controller {
 			$d['nama_pelanggan'] = $get->nama_pelanggan;
 			$d['id_transaksi_pemasangan'] = $get->id_transaksi_pemasangan;
 			$d['alamat_pelanggan'] = $get->alamat_pelanggan;
-			$d['st'] = $get->st;
 			$d['promo'] = $get->promo;
-			$d['prime_time'] = $get->prime_time;
-			$d['regular_time'] = $get->regular_time;
+			$d['kategori'] = $get->kategori;
 			$d['volume_tayang'] = $get->volume_tayang;
 			$d['id_penyiar'] = $get->id_penyiar;
 			
@@ -63,7 +61,7 @@ class transaksi_jadwal extends CI_Controller {
  
    public function simpan()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$id['id_transaksi_jadwal'] = $this->input->post("id_param");
 
@@ -94,7 +92,7 @@ class transaksi_jadwal extends CI_Controller {
  
 	public function hapus($id_param)
 	{
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_transaksi_transaksi'] = $id_param;
 			$this->db->delete("dlmbg_transaksi_transaksi",$where);

@@ -9,7 +9,7 @@ class tarif extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_tarif($GLOBALS['site_limit_small'],$uri);
 			
@@ -26,13 +26,11 @@ class tarif extends CI_Controller {
  
    public function tambah()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
-			$d['st'] = "";
 			$d['promo'] = "";
-			$d['durasi'] = "";
-			$d['prime_time'] = "";
-			$d['regular_time'] = "";
+			$d['kategori'] = "";
+			$d['biaya'] = "";
 			$d['keterangan'] = "";
 			
 			$d['id_param'] = "";
@@ -51,16 +49,14 @@ class tarif extends CI_Controller {
  
    public function edit($id_param)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_tarif_iklan'] = $id_param;
 			$get = $this->db->get_where("dlmbg_tarif_iklan",$where)->row();
 			
-			$d['st'] = $get->st;
 			$d['promo'] = $get->promo;
-			$d['durasi'] = $get->durasi;
-			$d['prime_time'] = $get->prime_time;
-			$d['regular_time'] = $get->regular_time;
+			$d['kategori'] = $get->kategori;
+			$d['biaya'] = $get->biaya;
 			$d['keterangan'] = $get->keterangan;
 			
 			$d['id_param'] = $get->id_tarif_iklan;
@@ -79,28 +75,24 @@ class tarif extends CI_Controller {
  
    public function simpan()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$tipe = $this->input->post("tipe");
 			$id['id_tarif_iklan'] = $this->input->post("id_param");
 			if($tipe=="tambah")
 			{
-				$in['st'] = $this->input->post("st");
 				$in['promo'] = $this->input->post("promo");
-				$in['durasi'] = $this->input->post("durasi");
-				$in['prime_time'] = $this->input->post("prime_time");
-				$in['regular_time'] = $this->input->post("regular_time");
+				$in['biaya'] = $this->input->post("biaya");
+				$in['kategori'] = $this->input->post("kategori");
 				$in['keterangan'] = $this->input->post("keterangan");
 				
 				$this->db->insert("dlmbg_tarif_iklan",$in);
 			}
 			else if($tipe=="edit")
 			{
-				$in['st'] = $this->input->post("st");
 				$in['promo'] = $this->input->post("promo");
-				$in['durasi'] = $this->input->post("durasi");
-				$in['prime_time'] = $this->input->post("prime_time");
-				$in['regular_time'] = $this->input->post("regular_time");
+				$in['biaya'] = $this->input->post("biaya");
+				$in['kategori'] = $this->input->post("kategori");
 				$in['keterangan'] = $this->input->post("keterangan");
 					$this->db->update("dlmbg_tarif_iklan",$in,$id);
 			}
@@ -115,7 +107,7 @@ class tarif extends CI_Controller {
  
 	public function hapus($id_param)
 	{
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_tarif_iklan'] = $id_param;
 			$this->db->delete("dlmbg_tarif_iklan",$where);

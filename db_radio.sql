@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Waktu pembuatan: 13. Juli 2013 jam 17:22
+-- Waktu pembuatan: 19. Juli 2013 jam 20:26
 -- Versi Server: 5.1.44
 -- Versi PHP: 5.3.1
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `dlmbg_detail_transaksi_jadwal` (
   `tanggal` varchar(100) NOT NULL,
   `acara` varchar(100) NOT NULL,
   PRIMARY KEY (`id_detail_transaksi_jadwal`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 --
 -- Dumping data untuk tabel `dlmbg_detail_transaksi_jadwal`
@@ -57,9 +57,14 @@ INSERT INTO `dlmbg_detail_transaksi_jadwal` (`id_detail_transaksi_jadwal`, `id_t
 (18, 5, 3, 2, '2013-07-15', 'aselole'),
 (19, 5, 4, 2, '2013-07-16', 'Single Life'),
 (20, 5, 5, 2, '2013-07-17', 'Single Life Pro'),
-(21, 9, 0, 0, '', ''),
-(22, 9, 0, 0, '', ''),
-(23, 9, 0, 0, '', '');
+(21, 9, 3, 2, '2013-07-22', 'Kosmic Flow'),
+(22, 9, 4, 3, '2013-07-23', 'Janger'),
+(23, 9, 6, 4, '2013-07-25', 'Senandung Galau'),
+(34, 10, 0, 0, '', ''),
+(33, 10, 0, 0, '', ''),
+(32, 10, 0, 0, '', ''),
+(31, 10, 0, 0, '', ''),
+(35, 10, 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -97,17 +102,17 @@ CREATE TABLE IF NOT EXISTS `dlmbg_jadwal` (
   `id_waktu` int(11) NOT NULL,
   `id_hari` int(11) NOT NULL,
   `id_penyiar` int(11) NOT NULL,
-  `acara` varchar(150) NOT NULL,
+  `id_acara` int(5) NOT NULL,
   PRIMARY KEY (`id_jadwal`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data untuk tabel `dlmbg_jadwal`
 --
 
-INSERT INTO `dlmbg_jadwal` (`id_jadwal`, `id_waktu`, `id_hari`, `id_penyiar`, `acara`) VALUES
-(1, 3, 5, 1, 'Kopok'),
-(2, 6, 5, 3, 'Ngocok');
+INSERT INTO `dlmbg_jadwal` (`id_jadwal`, `id_waktu`, `id_hari`, `id_penyiar`, `id_acara`) VALUES
+(3, 3, 5, 1, 4),
+(2, 6, 5, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -143,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `dlmbg_pembayaran` (
   `tanggal_bayar` varchar(30) NOT NULL,
   `dibayar` int(11) NOT NULL,
   PRIMARY KEY (`id_pembayaran`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data untuk tabel `dlmbg_pembayaran`
@@ -151,7 +156,8 @@ CREATE TABLE IF NOT EXISTS `dlmbg_pembayaran` (
 
 INSERT INTO `dlmbg_pembayaran` (`id_pembayaran`, `id_transaksi_pemasangan`, `tanggal_bayar`, `dibayar`) VALUES
 (2, 'PS00000001', '', 60000),
-(6, 'PS00000002', '', 0);
+(7, 'PS00000003', '', 0),
+(6, 'PS00000002', '2013-07-20', 400000);
 
 -- --------------------------------------------------------
 
@@ -208,22 +214,21 @@ INSERT INTO `dlmbg_setting` (`id_setting`, `tipe`, `title`, `content_setting`) V
 
 CREATE TABLE IF NOT EXISTS `dlmbg_tarif_iklan` (
   `id_tarif_iklan` int(5) NOT NULL AUTO_INCREMENT,
-  `st` varchar(30) NOT NULL,
   `promo` varchar(100) NOT NULL,
-  `durasi` varchar(100) NOT NULL,
-  `prime_time` varchar(100) NOT NULL,
-  `regular_time` varchar(100) NOT NULL,
+  `kategori` varchar(100) NOT NULL,
+  `biaya` varchar(100) NOT NULL,
   `keterangan` text NOT NULL,
   PRIMARY KEY (`id_tarif_iklan`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data untuk tabel `dlmbg_tarif_iklan`
 --
 
-INSERT INTO `dlmbg_tarif_iklan` (`id_tarif_iklan`, `st`, `promo`, `durasi`, `prime_time`, `regular_time`, `keterangan`) VALUES
-(1, 'Tarif Iklan Program', 'Loose Spot', '0-120', '50000', '30000', 'Sehari 3 kali'),
-(3, 'Tarif Iklan Program', 'Ape Kaden', '120-150', '45000', '199000', 'jossss');
+INSERT INTO `dlmbg_tarif_iklan` (`id_tarif_iklan`, `promo`, `kategori`, `biaya`, `keterangan`) VALUES
+(1, 'Loose Spot', 'Regular Time', '50000', 'Sehari 3 kali'),
+(3, 'Ape Kaden', 'Prime Time', '45000', 'jossss'),
+(4, 'Kosmos Horizon', 'Regular Time', '20000', 'Ok');
 
 -- --------------------------------------------------------
 
@@ -236,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `dlmbg_transaksi_jadwal` (
   `id_transaksi_pemasangan` varchar(30) NOT NULL,
   `id_penyiar` int(11) NOT NULL,
   PRIMARY KEY (`id_transaksi_jadwal`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data untuk tabel `dlmbg_transaksi_jadwal`
@@ -244,7 +249,8 @@ CREATE TABLE IF NOT EXISTS `dlmbg_transaksi_jadwal` (
 
 INSERT INTO `dlmbg_transaksi_jadwal` (`id_transaksi_jadwal`, `id_transaksi_pemasangan`, `id_penyiar`) VALUES
 (5, 'PS00000001', 1),
-(9, 'PS00000002', 0);
+(10, 'PS00000003', 0),
+(9, 'PS00000002', 1);
 
 -- --------------------------------------------------------
 
@@ -261,6 +267,9 @@ CREATE TABLE IF NOT EXISTS `dlmbg_transaksi_pemasangan` (
   `volume_tayang` varchar(20) NOT NULL,
   `jumlah_biaya` int(11) NOT NULL,
   `uang_muka` int(11) NOT NULL,
+  `jenis_iklan` varchar(50) NOT NULL,
+  `stts` varchar(50) NOT NULL,
+  `harga_lain` int(10) NOT NULL,
   PRIMARY KEY (`id_transaksi_pemasangan`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -268,9 +277,10 @@ CREATE TABLE IF NOT EXISTS `dlmbg_transaksi_pemasangan` (
 -- Dumping data untuk tabel `dlmbg_transaksi_pemasangan`
 --
 
-INSERT INTO `dlmbg_transaksi_pemasangan` (`id_transaksi_pemasangan`, `tanggal`, `kode_pelanggan`, `id_tarif_iklan`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka`) VALUES
-('PS00000001', '2013-07-13', 35, 1, '23', '3', 100000, 40000),
-('PS00000002', '2013-07-14', 35, 1, '23', '3', 100000, 93000);
+INSERT INTO `dlmbg_transaksi_pemasangan` (`id_transaksi_pemasangan`, `tanggal`, `kode_pelanggan`, `id_tarif_iklan`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka`, `jenis_iklan`, `stts`, `harga_lain`) VALUES
+('PS00000001', '2013-07-13', 35, 1, '23', '3', 100000, 40000, '', '', 0),
+('PS00000002', '2013-07-14', 35, 3, '23', '3', 483000, 93000, 'kontrak', 'Lunas', 7000),
+('PS00000003', '2013-07-20', 33, 3, '45', '5', 1125000, 400000, 'kontrak', 'Belum Lunas', 5000);
 
 -- --------------------------------------------------------
 
@@ -293,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `dlmbg_user` (
 
 INSERT INTO `dlmbg_user` (`kode_user`, `username`, `password`, `level`, `nama_user`) VALUES
 (1, 'admin', 'febe1e308d81e63cbe88e81920aa95ed', 'admin', 'Gede Lumbung'),
-(3, 'kasir', 'f2f9e8daebf8c0ebceef0050fe6c2423', 'kasir', 'Dedek Haryanto');
+(3, 'kasir', 'a399badbf2cff1439824e6f143d0339a', 'kasir', 'Dedek Haryanto');
 
 -- --------------------------------------------------------
 

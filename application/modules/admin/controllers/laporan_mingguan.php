@@ -9,7 +9,7 @@ class laporan_mingguan extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_laporan_mingguan($GLOBALS['site_limit_small'],$uri);
 			
@@ -26,7 +26,7 @@ class laporan_mingguan extends CI_Controller {
  
    public function set()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$id['mingguan_awal'] = $this->input->post("tgl_awal");
 			$id['mingguan_akhir'] = $this->input->post("tgl_akhir");
@@ -42,7 +42,7 @@ class laporan_mingguan extends CI_Controller {
  
    public function cetak($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_laporan_mingguan($GLOBALS['site_limit_small'],$uri);
 

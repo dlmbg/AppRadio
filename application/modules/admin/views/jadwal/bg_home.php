@@ -23,10 +23,11 @@
 							$hari  = $this->db->get("dlmbg_hari");
 							foreach($hari->result() as $h)
 							{
-								$cek['id_hari'] = $h->id_hari;
-								$cek['id_waktu'] = $w->id_waktu;
-								$g = $this->db->get_where("dlmbg_jadwal",$cek)->num_rows();
-								$g_det = $this->db->select("*")->join("dlmbg_penyiar","dlmbg_penyiar.id_penyiar=dlmbg_jadwal.id_penyiar")->get_where("dlmbg_jadwal",$cek)->row();
+								$cek['dlmbg_jadwal.id_hari'] = $h->id_hari;
+								$cek['dlmbg_jadwal.id_waktu'] = $w->id_waktu;
+								$g = $this->db->select("*")->join("dlmbg_detail_transaksi_jadwal","dlmbg_detail_transaksi_jadwal.id_detail_transaksi_jadwal=dlmbg_jadwal.id_acara")->get_where("dlmbg_jadwal",$cek)->num_rows();
+								
+								$g_det = $this->db->select("*")->join("dlmbg_detail_transaksi_jadwal","dlmbg_detail_transaksi_jadwal.id_detail_transaksi_jadwal=dlmbg_jadwal.id_acara")->join("dlmbg_penyiar","dlmbg_penyiar.id_penyiar=dlmbg_jadwal.id_penyiar")->get_where("dlmbg_jadwal",$cek)->row();
 								if($g>0)
 								{
 									echo "<td>

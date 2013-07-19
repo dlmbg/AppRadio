@@ -9,7 +9,7 @@ class pemasangan extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_pemasangan($GLOBALS['site_limit_small'],$uri);
 			
@@ -26,10 +26,10 @@ class pemasangan extends CI_Controller {
  
    public function tambah()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['pelanggan'] = $this->db->get("dlmbg_pelanggan");
-			$d['tarif'] = $this->db->get("dlmbg_tarif_iklan");
+			$d['tarif'] = $this->db->order_by("kategori","ASC")->get("dlmbg_tarif_iklan");
 			$d['kode'] = $this->app_global_admin_model->getMaxKodePesanan();
 
 			$d['tanggal'] = "";
@@ -39,7 +39,9 @@ class pemasangan extends CI_Controller {
 			$d['volume_tayang'] = "";
 			$d['jumlah_biaya'] = "";
 			$d['uang_muka'] = "";
+			$d['harga_lain'] = "";
 			$d['id_transaksi_jadwal'] = "";
+			$d['stts'] = "Belum Lunas";
 			
 			$d['id_param'] = "";
 			$d['tipe'] = "tambah";
@@ -57,14 +59,14 @@ class pemasangan extends CI_Controller {
  
    public function edit($id_param)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_transaksi_pemasangan'] = $id_param;
 			$get = $this->db->get_where("dlmbg_transaksi_pemasangan",$where)->row();
 			$get_det = $this->db->get_where("dlmbg_transaksi_jadwal",$where)->row();
 			
 			$d['pelanggan'] = $this->db->get("dlmbg_pelanggan");
-			$d['tarif'] = $this->db->get("dlmbg_tarif_iklan");
+			$d['tarif'] = $this->db->order_by("kategori","ASC")->get("dlmbg_tarif_iklan");
 
 			$d['id_transaksi_jadwal'] = $get_det->id_transaksi_jadwal;
 			$d['tanggal'] = $get->tanggal;
@@ -74,7 +76,10 @@ class pemasangan extends CI_Controller {
 			$d['volume_tayang'] = $get->volume_tayang;
 			$d['jumlah_biaya'] = $get->jumlah_biaya;
 			$d['uang_muka'] = $get->uang_muka;
+			$d['jenis_iklan'] = $get->jenis_iklan;
 			$d['kode'] = $get->id_transaksi_pemasangan;
+			$d['stts'] = $get->stts;
+			$d['harga_lain'] = $get->harga_lain;
 			
 			$d['id_param'] = $get->id_transaksi_pemasangan;
 			$d['tipe'] = "edit";
@@ -89,10 +94,42 @@ class pemasangan extends CI_Controller {
 			redirect(base_url());
 		}
    }
+
+   public function ambil_harga()
+   {
+   		if($this->session->userdata("logged_in")!="")
+		{
+			$kd['id_tarif_iklan'] = $_GET["id_tarif_iklan"];
+			$q = $this->db->get_where("dlmbg_tarif_iklan",$kd)->row();
+			echo $q->biaya;
+		}
+
+   }
+
+   public function hitung_total()
+   {
+   		if($this->session->userdata("logged_in")!="")
+		{
+			$kd = $_GET["jenis_iklan"];
+			$durasi_iklan = $_GET["durasi_iklan"];
+			$volume_tayang = $_GET["volume_tayang"];
+			$harga = $_GET["harga"];
+			if($kd=="kontrak")
+			{
+				echo $harga*$durasi_iklan*$volume_tayang;
+			}
+			else if($kd=="program")
+			{
+				echo $harga;
+			}
+
+		}
+
+   }
  
    public function simpan()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$tipe = $this->input->post("tipe");
 			$id['id_transaksi_pemasangan'] = $this->input->post("id_param");
@@ -106,6 +143,14 @@ class pemasangan extends CI_Controller {
 				$in['volume_tayang'] = $this->input->post("volume_tayang");
 				$in['jumlah_biaya'] = $this->input->post("jumlah_biaya");
 				$in['uang_muka'] = $this->input->post("uang_muka");
+				$in['jenis_iklan'] = $this->input->post("jenis_iklan");
+
+				$in['stts'] = "Belum Lunas";
+				if($in['uang_muka']>=$in['jumlah_biaya'])
+				{
+					$in['stts'] = "Lunas";
+				}
+				$in['harga_lain'] = $this->input->post("biaya");
 				
 				$this->db->insert("dlmbg_transaksi_pemasangan",$in);
 
@@ -131,6 +176,14 @@ class pemasangan extends CI_Controller {
 				$in['volume_tayang'] = $this->input->post("volume_tayang");
 				$in['jumlah_biaya'] = $this->input->post("jumlah_biaya");
 				$in['uang_muka'] = $this->input->post("uang_muka");
+				$in['jenis_iklan'] = $this->input->post("jenis_iklan");
+
+				$in['stts'] = "Belum Lunas";
+				if($in['uang_muka']>=$in['jumlah_biaya'])
+				{
+					$in['stts'] = "Lunas";
+				}
+				$in['harga_lain'] = $this->input->post("biaya");
 
 				$id_hapus['id_transaksi_jadwal'] = $this->input->post("id_transaksi_jadwal");
 
@@ -160,7 +213,7 @@ class pemasangan extends CI_Controller {
  
 	public function hapus($id_param)
 	{
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_transaksi_pemasangan'] = $id_param;
 			$this->db->delete("dlmbg_transaksi_pemasangan",$where);

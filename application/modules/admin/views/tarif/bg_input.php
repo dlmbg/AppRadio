@@ -8,36 +8,26 @@
 				<div class="well">
 					<?php echo form_open_multipart("admin/tarif/simpan"); ?>
 				
-				<label for="menu">Jenis</label>
-				<div class="cleaner_h5"></div>
-				<?php $a=''; $b='';
-					if($st=="Tarif Iklan Program"){$a='selected'; $b='';}
-					else if($st=="Tarif Iklan Kontrak Bulanan"){$a=''; $b='selected';}
-				?>
-				<select name="st">
-					<option value="Tarif Iklan Program" <?php echo $a; ?>>Tarif Iklan Program</option>
-					<option value="Tarif Iklan Kontrak Bulanan" <?php echo $b; ?>>Tarif Iklan Kontrak Bulanan</option>
-				</select>
-				<div class="cleaner_h10"></div>
-				
 				<label for="menu">Promo Item</label>
 				<div class="cleaner_h5"></div>
 				<input type="search" style="width:90%;" id="promo" name="promo" placeholder="promo" value="<?php echo $promo; ?>" />
 				<div class="cleaner_h10"></div>
 				
-				<label for="menu">durasi</label>
+				<label for="menu">kategori</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="durasi" name="durasi" placeholder="durasi" value="<?php echo $durasi; ?>" />
+				<?php $a=''; $b='';
+					if($kategori=="Prime Time"){$a='selected'; $b='';}
+					else if($kategori=="Regular Time"){$a=''; $b='selected';}
+				?>
+				<select name="kategori">
+					<option value="Prime Time" <?php echo $a; ?>>Prime Time</option>
+					<option value="Regular Time" <?php echo $b; ?>>Regular Time</option>
+				</select>
 				<div class="cleaner_h10"></div>
 				
-				<label for="menu">prime time</label>
+				<label for="menu">biaya</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="prime_time" name="prime_time" placeholder="prime time" value="<?php echo $prime_time; ?>" />
-				<div class="cleaner_h10"></div>
-				
-				<label for="menu">regular time</label>
-				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="regular_time" name="regular_time" placeholder="Regular Time" value="<?php echo $regular_time; ?>" />
+				<input type="search" style="width:90%;" id="biaya" name="biaya" placeholder="biaya" value="<?php echo $biaya; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">keterangan</label>

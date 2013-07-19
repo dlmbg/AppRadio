@@ -1,12 +1,20 @@
 	<section class="container">
-	
+	<script type="text/javascript">
+		function hitSisa()
+		{
+			var total = document.getElementById("jumlah_harga").value;
+			var bayar = document.getElementById("bayar").value;
+			var sisa = eval(bayar-total);
+			document.frm_pesan.kembalian.value = sisa;
+		}
+	</script>
 		<!-- Headings
 			================================================== -->
 		<section class="row-fluid">
 			<h1 class="box-header"><span class="icon-eject"></span> Pembayaran | <?php echo $GLOBALS['site_title']; ?></h1>
 			<div class="box">
 				<div class="well">
-					<?php echo form_open_multipart("admin/pembayaran/simpan"); ?>
+					<?php echo form_open_multipart("admin/pembayaran/simpan",'name="frm_pesan"'); ?>
 				
 				<label for="menu">Kode</label>
 				<div class="cleaner_h5"></div>
@@ -28,24 +36,14 @@
 				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $alamat_pelanggan; ?>" />
 				<div class="cleaner_h10"></div>
 				
-				<label for="menu">Jenis Iklan</label>
-				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $st; ?>" />
-				<div class="cleaner_h10"></div>
-				
 				<label for="menu">Promo</label>
 				<div class="cleaner_h5"></div>
 				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $promo; ?>" />
 				<div class="cleaner_h10"></div>
 				
-				<label for="menu">Prime Time</label>
+				<label for="menu">Kategori</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $prime_time; ?>" />
-				<div class="cleaner_h10"></div>
-				
-				<label for="menu">Regular Time</label>
-				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $regular_time; ?>" />
+				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $kategori; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Total</label>
@@ -60,12 +58,17 @@
 				
 				<label for="menu">Sisa Pembayaran</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="uang muka" value="<?php echo $sisa_bayar; ?>" />
+				<input type="search" style="width:90%;" id="jumlah_harga" name="jumlah_harga" placeholder="uang muka" value="<?php echo $sisa_bayar; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Dibayar</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="tanggal" name="dibayar" placeholder="dibayar" value="<?php echo $dibayar; ?>" />
+				<input type="search" style="width:90%;" id="bayar" name="bayar" placeholder="dibayar" onChange="hitSisa()" value="<?php echo $dibayar; ?>" />
+				<div class="cleaner_h10"></div>
+				
+				<label for="menu">Kembalian</label>
+				<div class="cleaner_h5"></div>
+				<input type="search" style="width:90%;" id="tanggal" name="kembalian" placeholder="kembali" value="<?php echo $dibayar-$sisa_bayar; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				

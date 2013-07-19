@@ -23,24 +23,14 @@
 				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $alamat_pelanggan; ?>" />
 				<div class="cleaner_h10"></div>
 				
-				<label for="menu">Jenis Iklan</label>
+				<label for="menu">Kategori</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $st; ?>" />
+				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $kategori; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Promo</label>
 				<div class="cleaner_h5"></div>
 				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $promo; ?>" />
-				<div class="cleaner_h10"></div>
-				
-				<label for="menu">Prime Time</label>
-				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $prime_time; ?>" />
-				<div class="cleaner_h10"></div>
-				
-				<label for="menu">Regular Time</label>
-				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="tanggal" name="tanggal" placeholder="alamat" value="<?php echo $regular_time; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Penyiar</label>

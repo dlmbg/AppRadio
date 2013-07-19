@@ -9,7 +9,7 @@ class grafik extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
  			$this->load->view("bg_header");
  			$this->load->view("bg_menu");
@@ -24,7 +24,7 @@ class grafik extends CI_Controller {
  
    public function set()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$set['tahun_chart'] = $this->input->post("tahun_chart");
 			$this->session->set_userdata($set);

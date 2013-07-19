@@ -20,24 +20,14 @@
 		<td><?php echo $alamat_pelanggan; ?></td>
 	</tr>
 	<tr>
-		<td>Jenis Iklan</td>
-		<td>:</td>
-		<td><?php echo $st; ?></td>
-	</tr>
-	<tr>
 		<td>Promo</td>
 		<td>:</td>
 		<td><?php echo $promo; ?></td>
 	</tr>
 	<tr>
-		<td>Prime Time</td>
+		<td>Kategori</td>
 		<td>:</td>
-		<td>Rp. <?php echo number_format($prime_time,2,",","."); ?></td>
-	</tr>
-	<tr>
-		<td>Regular Time</td>
-		<td>:</td>
-		<td>Rp. <?php echo number_format($regular_time,2,",","."); ?></td>
+		<td><?php echo $kategori; ?></td>
 	</tr>
 	<tr>
 		<td>Total</td>

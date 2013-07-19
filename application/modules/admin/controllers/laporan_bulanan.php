@@ -9,7 +9,7 @@ class laporan_bulanan extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_laporan_bulanan($GLOBALS['site_limit_small'],$uri);
 			
@@ -26,7 +26,7 @@ class laporan_bulanan extends CI_Controller {
  
    public function set()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$id['bulanan'] = $this->input->post("bulanan");
 			$id['tahunan'] = $this->input->post("tahunan");
@@ -42,7 +42,7 @@ class laporan_bulanan extends CI_Controller {
  
    public function cetak($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_laporan_bulanan($GLOBALS['site_limit_small'],$uri);
 

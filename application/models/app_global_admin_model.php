@@ -41,11 +41,13 @@ class app_global_admin_model extends CI_Model {
 					<td>".$i."</td>
 					<td>".$h->nama_user."</td>
 					<td>".$h->username."</td>
-					<td>".$h->level."</td>
-					<td>";
-			$hasil .= "<a href='".base_url()."admin/user/edit/".$h->kode_user."' class='btn btn-small btn-inverse'><i class='icon-edit'></i> Edit</a> ";
-			$hasil .= "<a href='".base_url()."admin/user/hapus/".$h->kode_user."' onClick=\"return confirm('Are you sure?');\" class='btn btn-small btn-danger'><i class='icon-trash'></i> Hapus</a></td>
-					</tr>";
+					<td>".$h->level."</td><td>
+					";
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= "<a href='".base_url()."admin/user/edit/".$h->kode_user."' class='btn btn-small btn-inverse'><i class='icon-edit'></i> Edit</a> ";
+				$hasil .= "<a href='".base_url()."admin/user/hapus/".$h->kode_user."' onClick=\"return confirm('Are you sure?');\" class='btn btn-small btn-danger'><i class='icon-trash'></i> Hapus</a>";
+			}
+			$hasil .= "</td></tr>";
 			$i++;
 		}
 		$hasil .= '</table>';
@@ -129,14 +131,17 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$g->nama_pelanggan.'</td>
 					<td>'.$g->alamat_pelanggan.'</td>
 					<td class="center">'.$g->telepon.'</td>
-					<td class="center">
-						<a class="btn btn-info" href="'.base_url().'admin/pelanggan/edit/'.$g->kode_pelanggan.'">
+					<td class="center">';
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/pelanggan/edit/'.$g->kode_pelanggan.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Edit
 						</a>
 						<a class="btn btn-danger" href="'.base_url().'admin/pelanggan/hapus/'.$g->kode_pelanggan.'" onClick=\'return confirm("Anda yakin?");\'>
 							<i class="halflings-icon trash halflings-icon"></i> Hapus
-						</a>
-					</td>
+						</a>';
+			}
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}
@@ -172,14 +177,17 @@ class app_global_admin_model extends CI_Model {
 				<tr>
 					<td>'.$i.'</td>
 					<td class="center">'.$g->hari.'</td>
-					<td class="center">
-						<a class="btn btn-info" href="'.base_url().'admin/hari/edit/'.$g->id_hari.'">
+					<td class="center">';
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/hari/edit/'.$g->id_hari.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Edit
 						</a>
 						<a class="btn btn-danger" href="'.base_url().'admin/hari/hapus/'.$g->id_hari.'" onClick=\'return confirm("Anda yakin?");\'>
 							<i class="halflings-icon trash halflings-icon"></i> Hapus
-						</a>
-					</td>
+						</a>';
+			}
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}
@@ -215,14 +223,18 @@ class app_global_admin_model extends CI_Model {
 				<tr>
 					<td>'.$i.'</td>
 					<td class="center">'.$g->waktu.'</td>
-					<td class="center">
-						<a class="btn btn-info" href="'.base_url().'admin/waktu/edit/'.$g->id_waktu.'">
+					<td class="center">';
+
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/waktu/edit/'.$g->id_waktu.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Edit
 						</a>
 						<a class="btn btn-danger" href="'.base_url().'admin/waktu/hapus/'.$g->id_waktu.'" onClick=\'return confirm("Anda yakin?");\'>
 							<i class="halflings-icon trash halflings-icon"></i> Hapus
-						</a>
-					</td>
+						</a>';
+			}
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}
@@ -258,14 +270,17 @@ class app_global_admin_model extends CI_Model {
 				<tr>
 					<td>'.$i.'</td>
 					<td class="center">'.$g->penyiar.'</td>
-					<td class="center">
-						<a class="btn btn-info" href="'.base_url().'admin/penyiar/edit/'.$g->id_penyiar.'">
+					<td class="center">';
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/penyiar/edit/'.$g->id_penyiar.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Edit
 						</a>
 						<a class="btn btn-danger" href="'.base_url().'admin/penyiar/hapus/'.$g->id_penyiar.'" onClick=\'return confirm("Anda yakin?");\'>
 							<i class="halflings-icon trash halflings-icon"></i> Hapus
-						</a>
-					</td>
+						</a>';
+			}
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}
@@ -282,11 +297,9 @@ class app_global_admin_model extends CI_Model {
 			  <thead>
 				  <tr>
 					  <th>No.</th>
-					  <th>Jenis</th>
 					  <th>Promo Item</th>
-					  <th>Durasi</th>
-					  <th>Prime time</th>
-					  <th>Regular time</th>
+					  <th>Kategori</th>
+					  <th>Biaya</th>
 					  <th>Keterangan</th>
 					  <th><a href='".base_url()."admin/tarif/tambah' class='btn btn-small btn-success'><i class='icon-plus-sign'></i> Tambah Data</a></th>
 				  </tr>
@@ -305,20 +318,23 @@ class app_global_admin_model extends CI_Model {
 			$hasil .= ' <tbody>
 				<tr>
 					<td>'.$i.'</td>
-					<td class="center">'.$g->st.'</td>
 					<td class="center">'.$g->promo.'</td>
-					<td class="center">'.$g->durasi.'</td>
-					<td class="center">'.$g->prime_time.'</td>
-					<td class="center">'.$g->regular_time.'</td>
+					<td class="center">'.$g->kategori.'</td>
+					<td class="center">'.$g->biaya.'</td>
 					<td class="center">'.$g->keterangan.'</td>
-					<td class="center">
-						<a class="btn btn-info" href="'.base_url().'admin/tarif/edit/'.$g->id_tarif_iklan.'">
+					<td class="center">';
+
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/tarif/edit/'.$g->id_tarif_iklan.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Edit
 						</a>
 						<a class="btn btn-danger" href="'.base_url().'admin/tarif/hapus/'.$g->id_tarif_iklan.'" onClick=\'return confirm("Anda yakin?");\'>
 							<i class="halflings-icon trash halflings-icon"></i> Hapus
-						</a>
-					</td>
+						</a>';
+			}
+
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}
@@ -337,25 +353,25 @@ class app_global_admin_model extends CI_Model {
 					  <th>No.</th>
 					  <th>Kode</th>
 					  <th>Pelanggan</th>
-					  <th>Jenis Iklan</th>
-					  <th>Tarif Prime</th>
-					  <th>Tarif Regular</th>
+					  <th>Kategori</th>
+					  <th>Biaya</th>
 					  <th>Durasi</th>
 					  <th>Vol. Tayang</th>
 					  <th>Biaya</th>
 					  <th>Uang Muka</th>
+					  <th>Status</th>
 					  <th><a href='".base_url()."admin/pemasangan/tambah' class='btn btn-small btn-success'><i class='icon-plus-sign'></i> Tambah Data</a></th>
 				  </tr>
 			  </thead>";
 			  
-		$tot_hal = $this->db->select("id_transaksi_pemasangan, nama_pelanggan, st, prime_time, regular_time, durasi_iklan, volume_tayang, jumlah_biaya, uang_muka")->join("dlmbg_pelanggan", "dlmbg_pelanggan.kode_pelanggan=dlmbg_transaksi_pemasangan.kode_pelanggan")->join("dlmbg_tarif_iklan", "dlmbg_tarif_iklan.id_tarif_iklan=dlmbg_transaksi_pemasangan.id_tarif_iklan")->get("dlmbg_transaksi_pemasangan");
+		$tot_hal = $this->db->select("stts, id_transaksi_pemasangan, nama_pelanggan, kategori, biaya, durasi_iklan, volume_tayang, jumlah_biaya, uang_muka")->join("dlmbg_pelanggan", "dlmbg_pelanggan.kode_pelanggan=dlmbg_transaksi_pemasangan.kode_pelanggan")->join("dlmbg_tarif_iklan", "dlmbg_tarif_iklan.id_tarif_iklan=dlmbg_transaksi_pemasangan.id_tarif_iklan")->get("dlmbg_transaksi_pemasangan");
 
 		$config['base_url'] = base_url() . 'admin/pemasangan/index/';
 		$config['total_rows'] = $tot_hal->num_rows();
 		$config['per_page'] = $limit;
 		$config['uri_segment'] = 4;
 		$this->pagination->initialize($config);
-		$get = $this->db->select("id_transaksi_pemasangan, nama_pelanggan, promo, st, prime_time, regular_time, durasi_iklan, volume_tayang, jumlah_biaya, uang_muka")->join("dlmbg_pelanggan", "dlmbg_pelanggan.kode_pelanggan=dlmbg_transaksi_pemasangan.kode_pelanggan")->join("dlmbg_tarif_iklan", "dlmbg_tarif_iklan.id_tarif_iklan=dlmbg_transaksi_pemasangan.id_tarif_iklan")->get("dlmbg_transaksi_pemasangan",$limit,$offset);
+		$get = $this->db->select("stts, id_transaksi_pemasangan, nama_pelanggan, promo, kategori, biaya, durasi_iklan, volume_tayang, jumlah_biaya, uang_muka")->join("dlmbg_pelanggan", "dlmbg_pelanggan.kode_pelanggan=dlmbg_transaksi_pemasangan.kode_pelanggan")->join("dlmbg_tarif_iklan", "dlmbg_tarif_iklan.id_tarif_iklan=dlmbg_transaksi_pemasangan.id_tarif_iklan")->get("dlmbg_transaksi_pemasangan",$limit,$offset);
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -364,21 +380,26 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$i.'</td>
 					<td class="center">'.$g->id_transaksi_pemasangan.'</td>
 					<td class="center">'.$g->nama_pelanggan.'</td>
-					<td class="center">'.$g->st.'</td>
-					<td class="center">'.number_format($g->prime_time,2,',','.').'</td>
-					<td class="center">'.number_format($g->regular_time,2,',','.').'</td>
+					<td class="center">'.$g->kategori.'</td>
+					<td class="center">'.number_format($g->biaya,2,',','.').'</td>
 					<td class="center">'.$g->durasi_iklan.'</td>
 					<td class="center">'.$g->volume_tayang.'</td>
 					<td class="center">'.number_format($g->jumlah_biaya,2,',','.').'</td>
 					<td class="center">'.number_format($g->uang_muka,2,',','.').'</td>
-					<td class="center">
-						<a class="btn btn-info" href="'.base_url().'admin/pemasangan/edit/'.$g->id_transaksi_pemasangan.'">
+					<td class="center">'.$g->stts.'</td>
+					<td class="center">';
+
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/pemasangan/edit/'.$g->id_transaksi_pemasangan.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Edit
 						</a>
 						<a class="btn btn-danger" href="'.base_url().'admin/pemasangan/hapus/'.$g->id_transaksi_pemasangan.'" onClick=\'return confirm("Anda yakin?");\'>
 							<i class="halflings-icon trash halflings-icon"></i> Hapus
-						</a>
-					</td>
+						</a>';
+			}
+
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}
@@ -397,11 +418,12 @@ class app_global_admin_model extends CI_Model {
 					  <th>No.</th>
 					  <th>Kode</th>
 					  <th>Pelanggan</th>
+					  <th>Kategori</th>
 					  <th>Jenis Iklan</th>
 					  <th>Durasi</th>
 					  <th>Vol. Tayang</th>
 					  <th>Penyiar</th>
-					  <th>Biaya</th>
+					  <th>Jadwal</th>
 					  <th>Actions</th>
 				  </tr>
 			  </thead>";
@@ -413,7 +435,7 @@ class app_global_admin_model extends CI_Model {
 		$config['per_page'] = $limit;
 		$config['uri_segment'] = 4;
 		$this->pagination->initialize($config);
-		$get = $this->db->query("select * from dlmbg_transaksi_jadwal a left join (SELECT `id_transaksi_pemasangan`, `nama_pelanggan`, `promo`, `st`, `prime_time`, `regular_time`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan left join dlmbg_penyiar d on a.id_penyiar=d.id_penyiar LIMIT ".$offset.",".$limit." ");
+		$get = $this->db->query("select * from dlmbg_transaksi_jadwal a left join (SELECT `id_transaksi_pemasangan`, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan left join dlmbg_penyiar d on a.id_penyiar=d.id_penyiar LIMIT ".$offset.",".$limit." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -422,16 +444,31 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$i.'</td>
 					<td class="center">'.$g->id_transaksi_pemasangan.'</td>
 					<td class="center">'.$g->nama_pelanggan.'</td>
-					<td class="center">'.$g->st.'</td>
+					<td class="center">'.$g->kategori.'</td>
+					<td class="center">'.$g->promo.'</td>
 					<td class="center">'.$g->durasi_iklan.'</td>
 					<td class="center">'.$g->volume_tayang.'</td>
 					<td class="center">'.$g->penyiar.'</td>
-					<td class="center">'.number_format($g->jumlah_biaya,2,',','.').'</td>
-					<td class="center">
-						<a class="btn btn-info" href="'.base_url().'admin/transaksi_jadwal/edit/'.$g->id_transaksi_jadwal.'">
+					<td class="center">';
+
+			$get_jadwal = $this->db->select("*")->join("dlmbg_hari","dlmbg_hari.id_hari=dlmbg_detail_transaksi_jadwal.id_hari")->join("dlmbg_waktu","dlmbg_waktu.id_waktu=dlmbg_detail_transaksi_jadwal.id_waktu")->get_where("dlmbg_detail_transaksi_jadwal",array("id_transaksi_jadwal"=>$g->id_transaksi_jadwal));
+
+			foreach($get_jadwal->result() as $gj)
+			{
+				$hasil .= "<li>".$gj->hari." | ".$gj->tanggal." | ".$gj->waktu." | ".$gj->acara."</li>";
+			}
+
+			$hasil .= '</td>
+					<td class="center">';
+
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/transaksi_jadwal/edit/'.$g->id_transaksi_jadwal.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Edit
-						</a>
-					</td>
+						</a>';
+			}
+
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}
@@ -469,7 +506,7 @@ class app_global_admin_model extends CI_Model {
 		$config['per_page'] = $limit;
 		$config['uri_segment'] = 4;
 		$this->pagination->initialize($config);
-		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `st`, `prime_time`, `regular_time`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan LIMIT ".$offset.",".$limit." ");
+		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan LIMIT ".$offset.",".$limit." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -478,7 +515,7 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$i.'</td>
 					<td class="center">'.$g->id_transaksi_pemasangan.'</td>
 					<td class="center">'.$g->nama_pelanggan.'</td>
-					<td class="center">'.$g->st.'</td>
+					<td class="center">'.$g->kategori.'</td>
 					<td class="center">'.$g->durasi_iklan.'</td>
 					<td class="center">'.$g->volume_tayang.'</td>
 					<td class="center">'.$g->tanggal.'</td>
@@ -486,14 +523,18 @@ class app_global_admin_model extends CI_Model {
 					<td class="center">'.number_format($g->jumlah_biaya,2,',','.').'</td>
 					<td class="center">'.number_format($g->uang_muka,2,',','.').'</td>
 					<td class="center">'.number_format($g->dibayar,2,',','.').'</td>
-					<td class="center">
-						<a class="btn btn-info" href="'.base_url().'admin/pembayaran/edit/'.$g->id_pembayaran.'">
+					<td class="center">';
+
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/pembayaran/edit/'.$g->id_pembayaran.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Edit
 						</a>
 						<a class="btn btn-inverse" href="'.base_url().'admin/pembayaran/cetak/'.$g->id_pembayaran.'">
 							<i class="halflings-icon edit halflings-icon"></i>  Cetak
-						</a>
-					</td>
+						</a>';
+			}
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}
@@ -517,7 +558,8 @@ class app_global_admin_model extends CI_Model {
 					  <th>No.</th>
 					  <th>Kode</th>
 					  <th>Pelanggan</th>
-					  <th>Jenis Iklan</th>
+					  <th>Kategori</th>
+					  <th>Promo</th>
 					  <th>Durasi</th>
 					  <th>Vol. Tayang</th>
 					  <th>Tanggal Pesan</th>
@@ -528,7 +570,7 @@ class app_global_admin_model extends CI_Model {
 				  </tr>
 			  </thead>";
 
-		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `st`, `prime_time`, `regular_time`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan ".$cari." ");
+		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan ".$cari." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -537,7 +579,8 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$i.'</td>
 					<td class="center">'.$g->id_transaksi_pemasangan.'</td>
 					<td class="center">'.$g->nama_pelanggan.'</td>
-					<td class="center">'.$g->st.'</td>
+					<td class="center">'.$g->kategori.'</td>
+					<td class="center">'.$g->promo.'</td>
 					<td class="center">'.$g->durasi_iklan.'</td>
 					<td class="center">'.$g->volume_tayang.'</td>
 					<td class="center">'.$g->tanggal.'</td>
@@ -567,7 +610,8 @@ class app_global_admin_model extends CI_Model {
 					  <th>No.</th>
 					  <th>Kode</th>
 					  <th>Pelanggan</th>
-					  <th>Jenis Iklan</th>
+					  <th>Kategori</th>
+					  <th>Promo</th>
 					  <th>Durasi</th>
 					  <th>Vol. Tayang</th>
 					  <th>Tanggal Pesan</th>
@@ -578,7 +622,7 @@ class app_global_admin_model extends CI_Model {
 				  </tr>
 			  </thead>";
 
-		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `st`, `prime_time`, `regular_time`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan ".$cari." ");
+		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan ".$cari." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -587,7 +631,8 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$i.'</td>
 					<td class="center">'.$g->id_transaksi_pemasangan.'</td>
 					<td class="center">'.$g->nama_pelanggan.'</td>
-					<td class="center">'.$g->st.'</td>
+					<td class="center">'.$g->kategori.'</td>
+					<td class="center">'.$g->promo.'</td>
 					<td class="center">'.$g->durasi_iklan.'</td>
 					<td class="center">'.$g->volume_tayang.'</td>
 					<td class="center">'.$g->tanggal.'</td>
@@ -617,7 +662,8 @@ class app_global_admin_model extends CI_Model {
 					  <th>No.</th>
 					  <th>Kode</th>
 					  <th>Pelanggan</th>
-					  <th>Jenis Iklan</th>
+					  <th>Kategori</th>
+					  <th>Promo</th>
 					  <th>Durasi</th>
 					  <th>Vol. Tayang</th>
 					  <th>Tanggal Pesan</th>
@@ -628,7 +674,7 @@ class app_global_admin_model extends CI_Model {
 				  </tr>
 			  </thead>";
 
-		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `st`, `prime_time`, `regular_time`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan ".$cari." ");
+		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan ".$cari." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -637,7 +683,8 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$i.'</td>
 					<td class="center">'.$g->id_transaksi_pemasangan.'</td>
 					<td class="center">'.$g->nama_pelanggan.'</td>
-					<td class="center">'.$g->st.'</td>
+					<td class="center">'.$g->kategori.'</td>
+					<td class="center">'.$g->promo.'</td>
 					<td class="center">'.$g->durasi_iklan.'</td>
 					<td class="center">'.$g->volume_tayang.'</td>
 					<td class="center">'.$g->tanggal.'</td>
@@ -662,7 +709,8 @@ class app_global_admin_model extends CI_Model {
 					  <th>No.</th>
 					  <th>Kode</th>
 					  <th>Pelanggan</th>
-					  <th>Jenis Iklan</th>
+					  <th>Kategori</th>
+					  <th>Promo</th>
 					  <th>Durasi</th>
 					  <th>Vol. Tayang</th>
 					  <th>Penyiar</th>
@@ -678,7 +726,7 @@ class app_global_admin_model extends CI_Model {
 		$config['per_page'] = $limit;
 		$config['uri_segment'] = 4;
 		$this->pagination->initialize($config);
-		$get = $this->db->query("select * from dlmbg_transaksi_jadwal a left join (SELECT `id_transaksi_pemasangan`, `nama_pelanggan`, `promo`, `st`, `prime_time`, `regular_time`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan left join dlmbg_penyiar d on a.id_penyiar=d.id_penyiar LIMIT ".$offset.",".$limit." ");
+		$get = $this->db->query("select * from dlmbg_transaksi_jadwal a left join (SELECT `id_transaksi_pemasangan`, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan left join dlmbg_penyiar d on a.id_penyiar=d.id_penyiar LIMIT ".$offset.",".$limit." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -687,7 +735,8 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$i.'</td>
 					<td class="center">'.$g->id_transaksi_pemasangan.'</td>
 					<td class="center">'.$g->nama_pelanggan.'</td>
-					<td class="center">'.$g->st.'</td>
+					<td class="center">'.$g->kategori.'</td>
+					<td class="center">'.$g->promo.'</td>
 					<td class="center">'.$g->durasi_iklan.'</td>
 					<td class="center">'.$g->volume_tayang.'</td>
 					<td class="center">'.$g->penyiar.'</td>

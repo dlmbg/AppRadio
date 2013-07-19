@@ -16,24 +16,14 @@
 		<td><?php echo $alamat_pelanggan; ?></td>
 	</tr>
 	<tr>
-		<td>Jenis Iklan</td>
+		<td>Kategori</td>
 		<td>:</td>
-		<td><?php echo $st; ?></td>
+		<td><?php echo $kategori; ?></td>
 	</tr>
 	<tr>
 		<td>Promo</td>
 		<td>:</td>
 		<td><?php echo $promo; ?></td>
-	</tr>
-	<tr>
-		<td>Prime Time</td>
-		<td>:</td>
-		<td><?php echo $prime_time; ?></td>
-	</tr>
-	<tr>
-		<td>Regular Time</td>
-		<td>:</td>
-		<td><?php echo $regular_time; ?></td>
 	</tr>
 	<tr>
 		<td>Penyiar</td>

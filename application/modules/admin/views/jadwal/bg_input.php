@@ -29,7 +29,21 @@
 				
 				<label for="menu">Acara</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="acara" name="acara" placeholder="Nama Acara" value="<?php echo $acara; ?>" />
+				<select name="id_acara" style="width:100%;">
+					<?php 
+					foreach($acara->result_array() as $p)
+					{
+						if($id_acara==$p['id_detail_transaksi_jadwal'])
+						{
+							echo '<option value="'.$p['id_detail_transaksi_jadwal'].'" selected>'.$p['acara'].'</option>';
+						}
+						else
+						{
+							echo '<option value="'.$p['id_detail_transaksi_jadwal'].'">'.$p['acara'].'</option>';
+						}
+					}	
+					?>
+				</select>
 				<div class="cleaner_h10"></div>
 				
 				<input type="hidden" name="id_param" value="<?php echo $id_param; ?>" />

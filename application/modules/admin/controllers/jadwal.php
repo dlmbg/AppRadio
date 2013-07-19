@@ -9,7 +9,7 @@ class jadwal extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
  			$this->load->view("bg_header");
  			$this->load->view("bg_menu");
@@ -24,16 +24,17 @@ class jadwal extends CI_Controller {
  
    public function tambah($id_waktu,$id_hari)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['id_penyiar'] = "";
-			$d['acara'] = "";
+			$d['id_acara'] = "";
 			$d['id_waktu'] = $id_waktu;
 			$d['id_hari'] = $id_hari;
 			
 			$d['id_param'] = "";
 			$d['tipe'] = "tambah";
 			$d['penyiar'] = $this->db->get("dlmbg_penyiar");
+			$d['acara'] = $this->db->where_not_in("acara","")->get("dlmbg_detail_transaksi_jadwal");
 			
  			$this->load->view("bg_header",$d);
  			$this->load->view("bg_menu");
@@ -46,18 +47,23 @@ class jadwal extends CI_Controller {
 		}
    }
  
-   public function edit($id_param)
+   public function edit($id_waktu,$id_hari)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
-			$where['id_hari'] = $id_param;
-			$get = $this->db->get_where("dlmbg_hari",$where)->row();
+			$where['id_waktu'] = $id_waktu;
+			$where['id_hari'] = $id_hari;
+			$get = $this->db->get_where("dlmbg_jadwal",$where)->row();
 			
-			$d['hari'] = $get->hari;
+			$d['id_hari'] = $get->id_hari;
+			$d['id_penyiar'] = $get->id_penyiar;
+			$d['id_acara'] = $get->id_acara;
+			$d['id_waktu'] = $get->id_waktu;
 			
 			$d['id_param'] = $get->id_hari;
 			$d['tipe'] = "edit";
 			$d['penyiar'] = $this->db->get("dlmbg_penyiar");
+			$d['acara'] = $this->db->where_not_in("acara","")->get("dlmbg_detail_transaksi_jadwal");
 			
  			$this->load->view("bg_header",$d);
  			$this->load->view("bg_menu");
@@ -72,23 +78,25 @@ class jadwal extends CI_Controller {
  
    public function simpan()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$tipe = $this->input->post("tipe");
-			$id['id_hari'] = $this->input->post("id_param");
+			$id['id_hari'] = $this->input->post("id_hari");
+			$id['id_waktu'] = $this->input->post("id_waktu");
 			if($tipe=="tambah")
 			{
 				$in['id_waktu'] = $this->input->post("id_waktu");
 				$in['id_hari'] = $this->input->post("id_hari");
 				$in['id_penyiar'] = $this->input->post("id_penyiar");
-				$in['acara'] = $this->input->post("acara");
+				$in['id_acara'] = $this->input->post("id_acara");
 				
 				$this->db->insert("dlmbg_jadwal",$in);
 			}
 			else if($tipe=="edit")
 			{
-					$in['hari'] = $this->input->post("hari");
-					$this->db->update("dlmbg_hari",$in,$id);
+				$in['id_penyiar'] = $this->input->post("id_penyiar");
+				$in['id_acara'] = $this->input->post("id_acara");
+					$this->db->update("dlmbg_jadwal",$in,$id);
 			}
 			
 			redirect("admin/jadwal");
@@ -101,7 +109,7 @@ class jadwal extends CI_Controller {
  
 	public function hapus($id_waktu,$id_hari)
 	{
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['id_waktu'] = $id_waktu;
 			$where['id_hari'] = $id_hari;

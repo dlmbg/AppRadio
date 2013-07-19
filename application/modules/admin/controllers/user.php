@@ -9,7 +9,7 @@ class user extends CI_Controller {
  
    public function index($uri=0)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['data_retrieve'] = $this->app_global_admin_model->generate_index_user($GLOBALS['site_limit_small'],$uri);
 			
@@ -26,7 +26,7 @@ class user extends CI_Controller {
  
    public function tambah()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$d['username'] = "";
 			$d['password'] = "";
@@ -49,7 +49,7 @@ class user extends CI_Controller {
  
    public function edit($id_param)
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['kode_user'] = $id_param;
 			$get = $this->db->get_where("dlmbg_user",$where)->row();
@@ -74,7 +74,7 @@ class user extends CI_Controller {
  
    public function simpan()
    {
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$tipe = $this->input->post("tipe");
 			$id['kode_user'] = $this->input->post("id_param");
@@ -116,7 +116,7 @@ class user extends CI_Controller {
  
 	public function hapus($id_param)
 	{
-		if($this->session->userdata("logged_in")!=""  && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
 			$where['kode_user'] = $id_param;
 			$this->db->delete("dlmbg_user",$where);

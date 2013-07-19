@@ -10,7 +10,7 @@ class admin extends CI_Controller {
 
 	function index()
 	{
-		if($this->session->userdata("logged_in")!="" && $this->session->userdata("level")=="admin")
+		if($this->session->userdata("logged_in")!="")
 		{
  			$this->load->view("bg_header");
  			$this->load->view("bg_menu");
