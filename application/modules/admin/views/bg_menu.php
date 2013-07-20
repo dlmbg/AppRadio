@@ -19,6 +19,8 @@
 						<li><a href="<?php echo base_url(); ?>admin/sistem"><i class="icon-wrench"></i> System</a></li>
 						<li class="divider-vertical"></li>
 						<?php } ?>
+						<li><a href="<?php echo base_url(); ?>admin/belum_lunas"><i class="icon-fire"></i> Belum Lunas</a></li>
+						<li class="divider-vertical"></li>
 						<li><a href="<?php echo base_url(); ?>admin/pelanggan"><i class="icon-tasks"></i> Pelanggan</a></li>
 						<li class="divider-vertical"></li>
 						<li><a href="<?php echo base_url(); ?>admin/hari"><i class="icon-leaf"></i> Hari</a></li>

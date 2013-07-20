@@ -408,6 +408,71 @@ class app_global_admin_model extends CI_Model {
 		return $hasil;
 	}
 	 
+	public function generate_index_pemasangan_belum_lunas($limit,$offset)
+	{
+		$hasil = "";
+		$hasil .= "
+			<table class='table table-striped table-bordered bootstrap-datatable datatable'>
+			  <thead>
+				  <tr>
+					  <th>No.</th>
+					  <th>Kode</th>
+					  <th>Pelanggan</th>
+					  <th>Kategori</th>
+					  <th>Biaya</th>
+					  <th>Durasi</th>
+					  <th>Vol. Tayang</th>
+					  <th>Biaya</th>
+					  <th>Uang Muka</th>
+					  <th>Status</th>
+					  <th><a href='".base_url()."admin/pemasangan/tambah' class='btn btn-small btn-success'><i class='icon-plus-sign'></i> Tambah Data</a></th>
+				  </tr>
+			  </thead>";
+			  
+		$tot_hal = $this->db->select("stts, id_transaksi_pemasangan, nama_pelanggan, kategori, biaya, durasi_iklan, volume_tayang, jumlah_biaya, uang_muka")->join("dlmbg_pelanggan", "dlmbg_pelanggan.kode_pelanggan=dlmbg_transaksi_pemasangan.kode_pelanggan")->join("dlmbg_tarif_iklan", "dlmbg_tarif_iklan.id_tarif_iklan=dlmbg_transaksi_pemasangan.id_tarif_iklan")->get_where("dlmbg_transaksi_pemasangan",array("stts"=>"Belum Lunas"));
+
+		$config['base_url'] = base_url() . 'admin/pemasangan/index/';
+		$config['total_rows'] = $tot_hal->num_rows();
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = 4;
+		$this->pagination->initialize($config);
+		$get = $this->db->select("stts, id_transaksi_pemasangan, nama_pelanggan, promo, kategori, biaya, durasi_iklan, volume_tayang, jumlah_biaya, uang_muka")->join("dlmbg_pelanggan", "dlmbg_pelanggan.kode_pelanggan=dlmbg_transaksi_pemasangan.kode_pelanggan")->join("dlmbg_tarif_iklan", "dlmbg_tarif_iklan.id_tarif_iklan=dlmbg_transaksi_pemasangan.id_tarif_iklan")->get_where("dlmbg_transaksi_pemasangan",array("stts"=>"Belum Lunas"),$limit,$offset);
+		$i = $offset+1;
+		foreach($get->result() as $g)
+		{
+			$hasil .= ' <tbody>
+				<tr>
+					<td>'.$i.'</td>
+					<td class="center">'.$g->id_transaksi_pemasangan.'</td>
+					<td class="center">'.$g->nama_pelanggan.'</td>
+					<td class="center">'.$g->kategori.'</td>
+					<td class="center">'.number_format($g->biaya,2,',','.').'</td>
+					<td class="center">'.$g->durasi_iklan.'</td>
+					<td class="center">'.$g->volume_tayang.'</td>
+					<td class="center">'.number_format($g->jumlah_biaya,2,',','.').'</td>
+					<td class="center">'.number_format($g->uang_muka,2,',','.').'</td>
+					<td class="center">'.$g->stts.'</td>
+					<td class="center">';
+
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/pemasangan/edit/'.$g->id_transaksi_pemasangan.'">
+							<i class="halflings-icon edit halflings-icon"></i>  Edit
+						</a>
+						<a class="btn btn-danger" href="'.base_url().'admin/pemasangan/hapus/'.$g->id_transaksi_pemasangan.'" onClick=\'return confirm("Anda yakin?");\'>
+							<i class="halflings-icon trash halflings-icon"></i> Hapus
+						</a>';
+			}
+
+						
+					$hasil .= '</td>
+				</tr>';
+			$i++;
+		}
+		$hasil .= "</table>";
+		$hasil .= $this->pagination->create_links();
+		return $hasil;
+	}
+	 
 	public function generate_index_transaksi($limit,$offset)
 	{
 		$hasil = "";
