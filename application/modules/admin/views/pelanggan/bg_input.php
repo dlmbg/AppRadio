@@ -30,6 +30,19 @@
 				  </div>
 				</div>
 				
+				<div class="control-group">
+					<label for="menu" class="control-label">jenis</label>
+				  <div class="controls">
+					<?php $a=''; $b='';
+						if($jenis=="Umum"){$a='selected'; $b='';}
+						else if($jenis=="Perusahaan"){$a=''; $b='selected';}
+					?>
+					<select name="jenis">
+						<option value="Umum" <?php echo $a; ?>>Umum</option>
+						<option value="Perusahaan" <?php echo $b; ?>>Perusahaan</option>
+					</select></div>
+				</div>
+				
 				<div class="form-actions">
 				  <button type="submit" class="btn btn-primary">Save changes</button>
 				  <button type="reset" class="btn">Cancel</button>

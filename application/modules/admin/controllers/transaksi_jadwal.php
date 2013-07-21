@@ -35,6 +35,7 @@ class transaksi_jadwal extends CI_Controller {
 			$d['penyiar'] = $this->db->get("dlmbg_penyiar");
 			$d['hari'] = $this->db->get("dlmbg_hari");
 			$d['waktu'] = $this->db->get("dlmbg_waktu");
+			$d['acara_ms'] = $this->db->get("dlmbg_acara");
 			$d['detail'] = $this->db->get_where("dlmbg_detail_transaksi_jadwal",$where);
 
 			$d['nama_pelanggan'] = $get->nama_pelanggan;

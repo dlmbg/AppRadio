@@ -33,13 +33,13 @@
 					<?php 
 					foreach($acara->result_array() as $p)
 					{
-						if($id_acara==$p['id_detail_transaksi_jadwal'])
+						if($id_acara==$p['id_acara'])
 						{
-							echo '<option value="'.$p['id_detail_transaksi_jadwal'].'" selected>'.$p['acara'].'</option>';
+							echo '<option value="'.$p['id_acara'].'" selected>'.$p['acara'].'</option>';
 						}
 						else
 						{
-							echo '<option value="'.$p['id_detail_transaksi_jadwal'].'">'.$p['acara'].'</option>';
+							echo '<option value="'.$p['id_acara'].'">'.$p['acara'].'</option>';
 						}
 					}	
 					?>

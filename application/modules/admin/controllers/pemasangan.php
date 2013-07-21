@@ -110,17 +110,11 @@ class pemasangan extends CI_Controller {
    {
    		if($this->session->userdata("logged_in")!="")
 		{
-			$kd = $_GET["jenis_iklan"];
-			$durasi_iklan = $_GET["durasi_iklan"];
-			$volume_tayang = $_GET["volume_tayang"];
-			$harga = $_GET["harga"];
-			if($kd=="kontrak")
+			$kd['kode_pelanggan'] = $_GET["kode_pelanggan"];
+			$q = $this->db->get_where("dlmbg_pelanggan",$kd)->row();
+			if($q->jenis=="Perusahaan")
 			{
-				echo $harga*$durasi_iklan*$volume_tayang;
-			}
-			else if($kd=="program")
-			{
-				echo $harga;
+				echo "Pajak : <input type='text' name='pajak'>";
 			}
 
 		}

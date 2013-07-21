@@ -28,6 +28,8 @@
 						<li><a href="<?php echo base_url(); ?>admin/waktu"><i class="icon-gift"></i> Waktu</a></li>
 						<li class="divider-vertical"></li>
 						<li><a href="<?php echo base_url(); ?>admin/penyiar"><i class="icon-th"></i> Penyiar</a></li>
+						<li class="divider-vertical"></li>
+						<li><a href="<?php echo base_url(); ?>admin/acara"><i class="icon-file-alt"></i> Acara</a></li>
 					</ul>
 					<ul class="nav pull-right">
 					<li class="divider-vertical"></li>

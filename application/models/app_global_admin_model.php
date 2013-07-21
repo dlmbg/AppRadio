@@ -111,6 +111,7 @@ class app_global_admin_model extends CI_Model {
 					  <th>Nama Pelanggan</th>
 					  <th>Alamat</th>
 					  <th>Telepon</th>
+					  <th>jenis</th>
 					  <th><a href='".base_url()."admin/pelanggan/tambah' class='btn btn-small btn-success'><i class='icon-plus-sign'></i> Tambah Data</a></th>
 				  </tr>
 			  </thead>";
@@ -131,6 +132,7 @@ class app_global_admin_model extends CI_Model {
 					<td>'.$g->nama_pelanggan.'</td>
 					<td>'.$g->alamat_pelanggan.'</td>
 					<td class="center">'.$g->telepon.'</td>
+					<td class="center">'.$g->jenis.'</td>
 					<td class="center">';
 			if($this->session->userdata("level")=="admin"){
 				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/pelanggan/edit/'.$g->kode_pelanggan.'">
@@ -516,7 +518,7 @@ class app_global_admin_model extends CI_Model {
 					<td class="center">'.$g->penyiar.'</td>
 					<td class="center">';
 
-			$get_jadwal = $this->db->select("*")->join("dlmbg_hari","dlmbg_hari.id_hari=dlmbg_detail_transaksi_jadwal.id_hari")->join("dlmbg_waktu","dlmbg_waktu.id_waktu=dlmbg_detail_transaksi_jadwal.id_waktu")->get_where("dlmbg_detail_transaksi_jadwal",array("id_transaksi_jadwal"=>$g->id_transaksi_jadwal));
+			$get_jadwal = $this->db->select("*")->join("dlmbg_hari","dlmbg_hari.id_hari=dlmbg_detail_transaksi_jadwal.id_hari")->join("dlmbg_waktu","dlmbg_waktu.id_waktu=dlmbg_detail_transaksi_jadwal.id_waktu")->join("dlmbg_acara","dlmbg_acara.id_acara=dlmbg_detail_transaksi_jadwal.acara")->get_where("dlmbg_detail_transaksi_jadwal",array("id_transaksi_jadwal"=>$g->id_transaksi_jadwal));
 
 			foreach($get_jadwal->result() as $gj)
 			{
@@ -811,6 +813,52 @@ class app_global_admin_model extends CI_Model {
 							<i class="halflings-icon edit halflings-icon"></i>  Cetak
 						</a>
 					</td>
+				</tr>';
+			$i++;
+		}
+		$hasil .= "</table>";
+		$hasil .= $this->pagination->create_links();
+		return $hasil;
+	}
+	 
+	public function generate_index_acara($limit,$offset)
+	{
+		$hasil = "";
+		$hasil .= "
+			<table class='table table-striped table-bordered bootstrap-datatable datatable'>
+			  <thead>
+				  <tr>
+					  <th>No.</th>
+					  <th>acara</th>
+					  <th><a href='".base_url()."admin/acara/tambah' class='btn btn-small btn-success'><i class='icon-plus-sign'></i> Tambah Data</a></th>
+				  </tr>
+			  </thead>";
+			  
+		$tot_hal = $this->db->get("dlmbg_acara");
+		$config['base_url'] = base_url() . 'admin/acara/index/';
+		$config['total_rows'] = $tot_hal->num_rows();
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = 4;
+		$this->pagination->initialize($config);
+		$get = $this->db->order_by("id_acara","DESC")->get("dlmbg_acara",$limit,$offset);
+		$i = $offset+1;
+		foreach($get->result() as $g)
+		{
+			$hasil .= ' <tbody>
+				<tr>
+					<td>'.$i.'</td>
+					<td class="center">'.$g->acara.'</td>
+					<td class="center">';
+			if($this->session->userdata("level")=="admin"){
+				$hasil .= '<a class="btn btn-info" href="'.base_url().'admin/acara/edit/'.$g->id_acara.'">
+							<i class="halflings-icon edit halflings-icon"></i>  Edit
+						</a>
+						<a class="btn btn-danger" href="'.base_url().'admin/acara/hapus/'.$g->id_acara.'" onClick=\'return confirm("Anda yakin?");\'>
+							<i class="halflings-icon trash halflings-icon"></i> Hapus
+						</a>';
+			}
+						
+					$hasil .= '</td>
 				</tr>';
 			$i++;
 		}

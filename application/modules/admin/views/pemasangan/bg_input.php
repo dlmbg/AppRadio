@@ -20,7 +20,8 @@
 				
 				<label for="menu">Pelanggan</label>
 				<div class="cleaner_h5"></div>
-				<select name="kode_pelanggan" style="width:100%;">
+				<select name="kode_pelanggan" id="kode_pelanggan" style="width:90%;" data-placeholder="Pelanggan..." class="chzn-select2" style="width:400px;" tabindex="2">
+					<option value=""></option>
 					<?php 
 					foreach($pelanggan->result_array() as $p)
 					{
@@ -36,6 +37,8 @@
 					?>
 				</select>
 				<div class="cleaner_h10"></div>
+
+				<div id="isi" style="padding:10px;"></div>
 				
 				<label for="menu">Iklan</label>
 				<div class="cleaner_h5"></div>
@@ -75,20 +78,6 @@
 				<input type="search" style="width:90%;" id="volume_tayang" name="volume_tayang" placeholder="volume tayang" value="<?php echo $volume_tayang; ?>" />
 				<div class="cleaner_h10"></div>
 				
-				<label for="menu">Jenis Iklan</label>
-				<div class="cleaner_h5"></div>
-				<select name="jenis_iklan" id="jenis_iklan" style="width:90%;" data-placeholder="Jenis Iklan..." class="chzn-select2" style="width:400px;" tabindex="2">
-
-				<?php $a=''; $b='';
-					if($jenis_iklan=="kontrak"){$a='selected'; $b='';}
-					else if($jenis_iklan=="program"){$a=''; $b='selected';}
-				?>
-					<option value=""></option>
-					<option value="kontrak" <?php echo $a; ?>>Iklan Kontrak</option>
-					<option value="program" <?php echo $b; ?>>Iklan Program</option>
-				</select>
-				<div class="cleaner_h10"></div>
-				
 				<label for="menu">Jumlah Biaya</label>
 				<div class="cleaner_h5"></div>
 				<input type="search" style="width:90%;" id="jumlah_biaya" name="jumlah_biaya" placeholder="jumlah biaya" value="<?php echo $jumlah_biaya; ?>" />
@@ -122,16 +111,13 @@
 						})
 					});
 				$(".chzn-select2").chosen().change(function(){ 
-							var jenis_iklan = $("#jenis_iklan").val(); 
-							var durasi_iklan = $("#durasi_iklan").val(); 
-							var volume_tayang = $("#volume_tayang").val(); 
-							var biaya = $("#biaya").val(); 
+							var kode_pelanggan = $("#kode_pelanggan").val(); 
 							$.ajax({ 
 							url: "<?php echo base_url(); ?>admin/pemasangan/hitung_total", 
-							data: "jenis_iklan="+jenis_iklan+"&durasi_iklan="+durasi_iklan+"&volume_tayang="+volume_tayang+"&harga="+biaya, 
+							data: "kode_pelanggan="+kode_pelanggan, 
 							cache: false, 
 							success: function(msg){ 
-								$("#jumlah_biaya").val(msg);
+								$("#isi").html(msg);
 							} 
 						})
 					});

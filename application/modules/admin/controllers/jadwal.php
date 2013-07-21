@@ -34,7 +34,7 @@ class jadwal extends CI_Controller {
 			$d['id_param'] = "";
 			$d['tipe'] = "tambah";
 			$d['penyiar'] = $this->db->get("dlmbg_penyiar");
-			$d['acara'] = $this->db->where_not_in("acara","")->get("dlmbg_detail_transaksi_jadwal");
+			$d['acara'] = $this->db->get("dlmbg_acara");
 			
  			$this->load->view("bg_header",$d);
  			$this->load->view("bg_menu");
@@ -63,7 +63,7 @@ class jadwal extends CI_Controller {
 			$d['id_param'] = $get->id_hari;
 			$d['tipe'] = "edit";
 			$d['penyiar'] = $this->db->get("dlmbg_penyiar");
-			$d['acara'] = $this->db->where_not_in("acara","")->get("dlmbg_detail_transaksi_jadwal");
+			$d['acara'] = $this->db->get("dlmbg_acara");
 			
  			$this->load->view("bg_header",$d);
  			$this->load->view("bg_menu");

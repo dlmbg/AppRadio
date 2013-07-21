@@ -98,7 +98,24 @@
 								}	
 								?>
 							</select></td>
-						<td><input type="search" name="acara[]" value="<?php echo $d['acara']; ?>"></td>
+						<td>
+
+						<select name="acara[]" style="width:100%;">
+							<?php 
+							foreach($acara_ms->result_array() as $p)
+							{
+								if($acara==$p['id_acara'])
+								{
+									echo '<option value="'.$p['id_acara'].'" selected>'.$p['acara'].'</option>';
+								}
+								else
+								{
+									echo '<option value="'.$p['id_acara'].'">'.$p['acara'].'</option>';
+								}
+							}	
+							?>
+						</select>
+						</td>
 						<input type="hidden" name="id_detail_transaksi_jadwal[]" value="<?php echo $d['id_detail_transaksi_jadwal']; ?>" />
 					</tr>
 					<?php } ?>

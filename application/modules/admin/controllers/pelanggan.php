@@ -46,6 +46,7 @@ class pelanggan extends CI_Controller {
 			$d['nama_pelanggan'] = "";
 			$d['alamat'] = "";
 			$d['telepon'] = "";
+			$d['jenis'] = "";
 			$d['st'] = "tambah";
 
  			$this->load->view("bg_header",$d);
@@ -78,6 +79,7 @@ class pelanggan extends CI_Controller {
 			$d['nama_pelanggan'] = $get->nama_pelanggan;
 			$d['alamat'] = $get->alamat_pelanggan;
 			$d['telepon'] = $get->telepon;
+			$d['jenis'] = $get->jenis;
 			$d['st'] = "edit";
 			
 
@@ -100,6 +102,7 @@ class pelanggan extends CI_Controller {
 			$dt['nama_pelanggan'] = $_POST['nama_pelanggan'];
 			$dt['alamat_pelanggan'] = $_POST['alamat'];
 			$dt['telepon'] = $_POST['telepon'];
+			$dt['jenis'] = $_POST['jenis'];
 			$st = $_POST['st'];
 			
 			if($st=="tambah")
