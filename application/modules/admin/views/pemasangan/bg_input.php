@@ -1,3 +1,27 @@
+<script type="text/javascript">
+function hitSisa()
+{
+	var pajak = document.getElementById("pajak").value;
+	if(pajak=="")
+	{
+		var volume_tayang = document.getElementById("volume_tayang").value;
+		var durasi_iklan = document.getElementById("durasi_iklan").value;
+		var biaya = document.getElementById("biaya").value;
+		var total = eval((volume_tayang*durasi_iklan*biaya));
+		document.frm_pesan.jumlah_biaya.value = total;
+	}
+	else
+	{
+		var pajak = document.getElementById("pajak").value;
+		var volume_tayang = document.getElementById("volume_tayang").value;
+		var durasi_iklan = document.getElementById("durasi_iklan").value;
+		var biaya = document.getElementById("biaya").value;
+		var hit_pajak = eval((volume_tayang*durasi_iklan*biaya)/pajak);
+		var total = eval((volume_tayang*durasi_iklan*biaya)+hit_pajak);
+		document.frm_pesan.jumlah_biaya.value = total;
+	}
+}
+</script>
 	<section class="container">
 	
 		<!-- Headings
@@ -6,7 +30,7 @@
 			<h1 class="box-header"><span class="icon-eject"></span> Pemasangan Iklan | <?php echo $GLOBALS['site_title']; ?></h1>
 			<div class="box">
 				<div class="well">
-					<?php echo form_open_multipart("admin/pemasangan/simpan"); ?>
+					<?php echo form_open_multipart("admin/pemasangan/simpan",'name="frm_pesan"'); ?>
 				
 				<label for="menu">Kode</label>
 				<div class="cleaner_h5"></div>
@@ -38,7 +62,13 @@
 				</select>
 				<div class="cleaner_h10"></div>
 
-				<div id="isi" style="padding:10px;"></div>
+				<div id="isi" style="padding:10px;">
+					<?php if($pajak!=""){ ?>
+						<input type="text" name="pajak" onchange="hitSisa();" id="pajak" value="<?php echo $pajak; ?>">
+					<?php } else{ ?>
+						<input type="hidden" name="pajak" id="pajak">
+					<?php } ?>
+				</div>
 				
 				<label for="menu">Iklan</label>
 				<div class="cleaner_h5"></div>
@@ -65,22 +95,22 @@
 				
 				<label for="menu">Harga</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="biaya" name="biaya" placeholder="biaya" value="<?php echo $harga_lain; ?>" />
+				<input type="search" style="width:90%;" id="biaya" name="biaya" onchange="hitSisa();" placeholder="biaya" value="<?php echo $harga_lain; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Durasi</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="durasi_iklan" name="durasi_iklan" placeholder="Durasi Iklan" value="<?php echo $durasi_iklan; ?>" />
+				<input type="search" style="width:90%;" id="durasi_iklan" onchange="hitSisa();" name="durasi_iklan" placeholder="Durasi Iklan" value="<?php echo $durasi_iklan; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Volume Tayang</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="volume_tayang" name="volume_tayang" placeholder="volume tayang" value="<?php echo $volume_tayang; ?>" />
+				<input type="search" style="width:90%;" id="volume_tayang" onchange="hitSisa();" name="volume_tayang" placeholder="volume tayang" value="<?php echo $volume_tayang; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Jumlah Biaya</label>
 				<div class="cleaner_h5"></div>
-				<input type="search" style="width:90%;" id="jumlah_biaya" name="jumlah_biaya" placeholder="jumlah biaya" value="<?php echo $jumlah_biaya; ?>" />
+				<input type="search" style="width:90%;" id="jumlah_biaya" onchange="hitSisa();" name="jumlah_biaya" placeholder="jumlah biaya" value="<?php echo $jumlah_biaya; ?>" />
 				<div class="cleaner_h10"></div>
 				
 				<label for="menu">Uang Muka</label>
