@@ -214,6 +214,21 @@ class pemasangan extends CI_Controller {
 		}
    }
  
+   public function set()
+   {
+		if($this->session->userdata("logged_in")!="")
+		{
+			$id['cari_data'] = $this->input->post("key");
+			$this->session->set_userdata($id);
+			
+			redirect("admin/pemasangan");
+		}
+		else
+		{
+			redirect(base_url());
+		}
+   }
+ 
 	public function hapus($id_param)
 	{
 		if($this->session->userdata("logged_in")!="")

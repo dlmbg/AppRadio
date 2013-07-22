@@ -347,6 +347,11 @@ class app_global_admin_model extends CI_Model {
 	 
 	public function generate_index_pemasangan($limit,$offset)
 	{
+		$where="";
+		if($this->session->userdata("cari_data")!="")
+		{
+		$where = 'where a.id_transaksi_pemasangan like "%'.$this->session->userdata("cari_data").'%"  or nama_pelanggan like "%'.$this->session->userdata("cari_data").'%"';
+		}
 		$hasil = "";
 		$hasil .= "
 			<table class='table table-striped table-bordered bootstrap-datatable datatable'>
@@ -366,14 +371,14 @@ class app_global_admin_model extends CI_Model {
 				  </tr>
 			  </thead>";
 			  
-		$tot_hal = $this->db->select("stts, id_transaksi_pemasangan, nama_pelanggan, kategori, biaya, durasi_iklan, volume_tayang, jumlah_biaya, uang_muka")->join("dlmbg_pelanggan", "dlmbg_pelanggan.kode_pelanggan=dlmbg_transaksi_pemasangan.kode_pelanggan")->join("dlmbg_tarif_iklan", "dlmbg_tarif_iklan.id_tarif_iklan=dlmbg_transaksi_pemasangan.id_tarif_iklan")->get("dlmbg_transaksi_pemasangan");
+		$tot_hal = $this->db->query("SELECT `stts`, `id_transaksi_pemasangan`, `nama_pelanggan`, `kategori`, `biaya`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM `dlmbg_transaksi_pemasangan` a JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`a`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`a`.`id_tarif_iklan` ".$where." ");
 
 		$config['base_url'] = base_url() . 'admin/pemasangan/index/';
 		$config['total_rows'] = $tot_hal->num_rows();
 		$config['per_page'] = $limit;
 		$config['uri_segment'] = 4;
 		$this->pagination->initialize($config);
-		$get = $this->db->select("stts, id_transaksi_pemasangan, nama_pelanggan, promo, kategori, biaya, durasi_iklan, volume_tayang, jumlah_biaya, uang_muka")->join("dlmbg_pelanggan", "dlmbg_pelanggan.kode_pelanggan=dlmbg_transaksi_pemasangan.kode_pelanggan")->join("dlmbg_tarif_iklan", "dlmbg_tarif_iklan.id_tarif_iklan=dlmbg_transaksi_pemasangan.id_tarif_iklan")->get("dlmbg_transaksi_pemasangan",$limit,$offset);
+		$get = $this->db->query("SELECT `stts`, `id_transaksi_pemasangan`, `nama_pelanggan`, `kategori`, `biaya`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM `dlmbg_transaksi_pemasangan` a JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`a`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`a`.`id_tarif_iklan` ".$where." LIMIT ".$offset.",".$limit." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -477,6 +482,11 @@ class app_global_admin_model extends CI_Model {
 	 
 	public function generate_index_transaksi($limit,$offset)
 	{
+		$where="";
+		if($this->session->userdata("cari_data")!="")
+		{
+		$where = 'where a.id_transaksi_pemasangan like "%'.$this->session->userdata("cari_data").'%"  or nama_pelanggan like "%'.$this->session->userdata("cari_data").'%"';
+		}
 		$hasil = "";
 		$hasil .= "
 			<table class='table table-striped table-bordered bootstrap-datatable datatable'>
@@ -502,7 +512,7 @@ class app_global_admin_model extends CI_Model {
 		$config['per_page'] = $limit;
 		$config['uri_segment'] = 4;
 		$this->pagination->initialize($config);
-		$get = $this->db->query("select * from dlmbg_transaksi_jadwal a left join (SELECT `id_transaksi_pemasangan`, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan left join dlmbg_penyiar d on a.id_penyiar=d.id_penyiar LIMIT ".$offset.",".$limit." ");
+		$get = $this->db->query("select * from dlmbg_transaksi_jadwal a left join (SELECT `id_transaksi_pemasangan`, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan left join dlmbg_penyiar d on a.id_penyiar=d.id_penyiar ".$where." LIMIT ".$offset.",".$limit." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
@@ -546,6 +556,11 @@ class app_global_admin_model extends CI_Model {
 	 
 	public function generate_index_pembayaran($limit,$offset)
 	{
+		$where="";
+		if($this->session->userdata("cari_data")!="")
+		{
+		$where = 'where a.id_transaksi_pemasangan like "%'.$this->session->userdata("cari_data").'%"  or nama_pelanggan like "%'.$this->session->userdata("cari_data").'%"';
+		}
 		$hasil = "";
 		$hasil .= "
 			<table class='table table-striped table-bordered bootstrap-datatable datatable'>
@@ -573,7 +588,7 @@ class app_global_admin_model extends CI_Model {
 		$config['per_page'] = $limit;
 		$config['uri_segment'] = 4;
 		$this->pagination->initialize($config);
-		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan LIMIT ".$offset.",".$limit." ");
+		$get = $this->db->query("select * from dlmbg_pembayaran a left join (SELECT `id_transaksi_pemasangan`, tanggal, `nama_pelanggan`, `promo`, `kategori`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka` FROM (`dlmbg_transaksi_pemasangan`) JOIN `dlmbg_pelanggan` ON `dlmbg_pelanggan`.`kode_pelanggan`=`dlmbg_transaksi_pemasangan`.`kode_pelanggan` JOIN `dlmbg_tarif_iklan` ON `dlmbg_tarif_iklan`.`id_tarif_iklan`=`dlmbg_transaksi_pemasangan`.`id_tarif_iklan`) b on a.id_transaksi_pemasangan=b.id_transaksi_pemasangan ".$where." LIMIT ".$offset.",".$limit." ");
 		$i = $offset+1;
 		foreach($get->result() as $g)
 		{
