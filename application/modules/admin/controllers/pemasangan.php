@@ -42,6 +42,7 @@ class pemasangan extends CI_Controller {
 			$d['harga_lain'] = "";
 			$d['id_transaksi_jadwal'] = "";
 			$d['pajak'] = "";
+			$d['hit_pajak'] = "";
 			$d['stts'] = "Belum Lunas";
 			
 			$d['id_param'] = "";
@@ -81,6 +82,7 @@ class pemasangan extends CI_Controller {
 			$d['kode'] = $get->id_transaksi_pemasangan;
 			$d['stts'] = $get->stts;
 			$d['pajak'] = $get->pajak;
+			$d['hit_pajak'] = $get->hit_pajak;
 			$d['harga_lain'] = $get->harga_lain;
 			
 			$d['id_param'] = $get->id_transaksi_pemasangan;
@@ -116,11 +118,14 @@ class pemasangan extends CI_Controller {
 			$q = $this->db->get_where("dlmbg_pelanggan",$kd)->row();
 			if($q->jenis=="Perusahaan")
 			{
-				echo "Pajak : <input type='text' name='pajak' id='pajak' onchange='hitSisa();'>";
+				echo "Pajak : <input type='text' name='pajak' id='pajak' onchange='hitSisa();'> %";
+				echo "<div class='cleaner_h10'></div>";
+				echo "Nominal Pajak : <input type='text' name='hit_pajak' id='hit_pajak' readonly> %";
 			}
 			else
 			{
 				echo "<input type='hidden' name='pajak' id='pajak'>";
+				echo "<input type='hidden' name='hit_pajak' id='hit_pajak'>";
 			}
 
 		}
@@ -145,6 +150,7 @@ class pemasangan extends CI_Controller {
 				$in['uang_muka'] = $this->input->post("uang_muka");
 				$in['jenis_iklan'] = $this->input->post("jenis_iklan");
 				$in['pajak'] = $this->input->post("pajak");
+				$in['hit_pajak'] = $this->input->post("hit_pajak");
 
 				$in['stts'] = "Belum Lunas";
 				if($in['uang_muka']>=$in['jumlah_biaya'])
@@ -179,6 +185,7 @@ class pemasangan extends CI_Controller {
 				$in['uang_muka'] = $this->input->post("uang_muka");
 				$in['jenis_iklan'] = $this->input->post("jenis_iklan");
 				$in['pajak'] = $this->input->post("pajak");
+				$in['hit_pajak'] = $this->input->post("hit_pajak");
 
 
 				$in['stts'] = "Belum Lunas";

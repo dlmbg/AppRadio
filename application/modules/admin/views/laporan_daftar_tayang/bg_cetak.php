@@ -56,7 +56,7 @@
 						<td>Jam</td>
 						<td>Disisipkan Pada Acara</td>
 					</tr>
-					<?php foreach($detail->result_array() as $d){ ?>
+					<?php $i=1; foreach($detail->result_array() as $d){ ?>
 					<tr>
 						<td>
 							<select name="id_hari[]">
@@ -91,10 +91,29 @@
 								}	
 								?>
 							</select></td>
-						<td><?php echo $d['acara']; ?></td>
+						<td>
+							<div id="acara-<?php echo $i; ?>">
+							<?php
+								$kd['id_waktu'] = $d['id_waktu'];
+								$kd['id_hari'] = $d["id_hari"];
+								$get = $this->db->select("*")->join("dlmbg_acara","dlmbg_acara.id_acara=dlmbg_jadwal.id_acara")->get_where("dlmbg_jadwal",$kd);
+								$q = $get->row();
+								if($get->num_rows()>0)
+								{
+									echo $q->acara;
+									echo "<input type='hidden' name='acara[]' id='acara' value='".$q->id_acara."'>";
+								}
+								else
+								{
+									echo "Tidak ada acara di menu jadwal";
+									echo "<input type='hidden' name='acara[]' id='acara' value=''>";
+								}
+							?>
+						</div>
+						</td>
 						<input type="hidden" name="id_detail_transaksi_jadwal[]" value="<?php echo $d['id_detail_transaksi_jadwal']; ?>" />
 					</tr>
-					<?php } ?>
+					<?php $i++; } ?>
 				</table>
 				
 				

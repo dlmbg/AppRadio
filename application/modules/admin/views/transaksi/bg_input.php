@@ -1,3 +1,5 @@
+<link id="base-style-responsive" href="<?php echo base_url().'asset/theme/'.$GLOBALS['site_theme']; ?>/css/chosen.css" rel="stylesheet" />
+<script src="<?php echo base_url(); ?>asset/theme/<?php echo $GLOBALS['site_theme']; ?>/js/chosen.jquery.js" type="text/javascript"></script>
 	<section class="container">
 	
 		<!-- Headings
@@ -63,10 +65,12 @@
 						<td>Jam</td>
 						<td>Disisipkan Pada Acara</td>
 					</tr>
-					<?php foreach($detail->result_array() as $d){ ?>
+					<?php $i=1; 
+					foreach($detail->result_array() as $d){ ?>
 					<tr>
 						<td>
-							<select name="id_hari[]">
+							<select name="id_hari[]" id="id_hari-<?php echo $i; ?>" data-placeholder="Hari..." class="chzn-select-<?php echo $i; ?>"  tabindex="2">
+								<option value=""></option>
 								<?php 
 								foreach($hari->result_array() as $h)
 								{
@@ -83,7 +87,8 @@
 							</select>
 						</td>
 						<td><input type="date" name="tanggal[]" value="<?php echo $d['tanggal']; ?>"></td>
-						<td><select name="waktu[]">
+						<td><select name="waktu[]" id="waktu-<?php echo $i; ?>" data-placeholder="Waktu..." class="chzn-select-<?php echo $i; ?>"  tabindex="2">
+								<option value=""></option>
 								<?php 
 								foreach($waktu->result_array() as $w)
 								{
@@ -100,25 +105,44 @@
 							</select></td>
 						<td>
 
-						<select name="acara[]" style="width:100%;">
-							<?php 
-							foreach($acara_ms->result_array() as $p)
-							{
-								if($acara==$p['id_acara'])
+						<div id="acara-<?php echo $i; ?>">
+							<?php
+								$kd['id_waktu'] = $d['id_waktu'];
+								$kd['id_hari'] = $d["id_hari"];
+								$get = $this->db->select("*")->join("dlmbg_acara","dlmbg_acara.id_acara=dlmbg_jadwal.id_acara")->get_where("dlmbg_jadwal",$kd);
+								$q = $get->row();
+								if($get->num_rows()>0)
 								{
-									echo '<option value="'.$p['id_acara'].'" selected>'.$p['acara'].'</option>';
+									echo $q->acara;
+									echo "<input type='hidden' name='acara[]' id='acara' value='".$q->id_acara."'>";
 								}
 								else
 								{
-									echo '<option value="'.$p['id_acara'].'">'.$p['acara'].'</option>';
+									echo "Tidak ada acara di menu jadwal";
+									echo "<input type='hidden' name='acara[]' id='acara' value=''>";
 								}
-							}	
 							?>
-						</select>
+						</div>
 						</td>
 						<input type="hidden" name="id_detail_transaksi_jadwal[]" value="<?php echo $d['id_detail_transaksi_jadwal']; ?>" />
 					</tr>
-					<?php } ?>
+
+				<script type="text/javascript"> 
+				$(".chzn-select-<?php echo $i; ?>").chosen().change(function(){ 
+							var waktu = $("#waktu-<?php echo $i; ?>").val(); 
+							var hari = $("#id_hari-<?php echo $i; ?>").val(); 
+							$.ajax({ 
+							url: "<?php echo base_url(); ?>admin/transaksi_jadwal/ambil_acara", 
+							data: "waktu="+waktu+"&id_hari="+hari, 
+							cache: false, 
+							success: function(msg){ 
+								$("#acara-<?php echo $i; ?>").html(msg);
+							} 
+						})
+					});
+				</script>
+					<?php 
+									$i++; } ?>
 				</table>
 				
 				<input type="hidden" name="id_param" value="<?php echo $id_param; ?>" />

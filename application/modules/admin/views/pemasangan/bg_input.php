@@ -16,9 +16,11 @@ function hitSisa()
 		var volume_tayang = document.getElementById("volume_tayang").value;
 		var durasi_iklan = document.getElementById("durasi_iklan").value;
 		var biaya = document.getElementById("biaya").value;
-		var hit_pajak = eval((volume_tayang*durasi_iklan*biaya)/pajak);
+		var hit_pajak = eval(((volume_tayang*durasi_iklan*biaya)/100)*pajak);
 		var total = eval((volume_tayang*durasi_iklan*biaya)+hit_pajak);
+		var nominal_pajak = eval(hit_pajak);
 		document.frm_pesan.jumlah_biaya.value = total;
+		document.frm_pesan.hit_pajak.value = nominal_pajak;
 	}
 }
 </script>
@@ -64,9 +66,12 @@ function hitSisa()
 
 				<div id="isi" style="padding:10px;">
 					<?php if($pajak!=""){ ?>
-						<input type="text" name="pajak" onchange="hitSisa();" id="pajak" value="<?php echo $pajak; ?>">
+						Pajak : <input type="text" name="pajak" onchange="hitSisa();" id="pajak" value="<?php echo $pajak; ?>"> %
+				<div class="cleaner_h10"></div>
+						Nominal Pajak : <input type="text" name="hit_pajak" readonly id="hit_pajak" value="<?php echo $hit_pajak; ?>">
 					<?php } else{ ?>
 						<input type="hidden" name="pajak" id="pajak">
+						<input type="hidden" name="hit_pajak" id="hit_pajak">
 					<?php } ?>
 				</div>
 				

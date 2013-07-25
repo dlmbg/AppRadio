@@ -105,6 +105,27 @@ class transaksi_jadwal extends CI_Controller {
 			redirect(base_url());
 		}
    }
+
+   public function ambil_acara()
+   {
+   		if($this->session->userdata("logged_in")!="")
+		{
+			$kd['id_waktu'] = $_GET["waktu"];
+			$kd['id_hari'] = $_GET["id_hari"];
+			$get = $this->db->select("*")->join("dlmbg_acara","dlmbg_acara.id_acara=dlmbg_jadwal.id_acara")->get_where("dlmbg_jadwal",$kd);
+			$q = $get->row();
+			if($get->num_rows()>0)
+			{
+				echo $q->acara;
+				echo "<input type='hidden' name='acara[]' id='acara' value='".$q->id_acara."'>";
+			}
+			else
+			{
+				echo "Tidak ada acara di menu jadwal";
+			}
+		}
+
+   }
  
 	public function hapus($id_param)
 	{

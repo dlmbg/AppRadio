@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Waktu pembuatan: 22. Juli 2013 jam 06:06
+-- Waktu pembuatan: 25. Juli 2013 jam 04:53
 -- Versi Server: 5.1.44
 -- Versi PHP: 5.3.1
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `dlmbg_detail_transaksi_jadwal` (
   `tanggal` varchar(100) NOT NULL,
   `acara` varchar(100) NOT NULL,
   PRIMARY KEY (`id_detail_transaksi_jadwal`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
 
 --
 -- Dumping data untuk tabel `dlmbg_detail_transaksi_jadwal`
@@ -95,16 +95,8 @@ INSERT INTO `dlmbg_detail_transaksi_jadwal` (`id_detail_transaksi_jadwal`, `id_t
 (43, 11, 0, 0, '', ''),
 (44, 11, 0, 0, '', ''),
 (45, 11, 0, 0, '', ''),
-(46, 12, 0, 0, '', ''),
-(47, 12, 0, 0, '', ''),
-(48, 12, 0, 0, '', ''),
-(49, 12, 0, 0, '', ''),
-(50, 12, 0, 0, '', ''),
-(51, 12, 0, 0, '', ''),
-(52, 12, 0, 0, '', ''),
-(53, 12, 0, 0, '', ''),
-(54, 12, 0, 0, '', ''),
-(55, 12, 0, 0, '', '');
+(57, 12, 5, 2, '2013-07-25', '3'),
+(56, 12, 3, 4, '2013-07-26', '2');
 
 -- --------------------------------------------------------
 
@@ -144,14 +136,15 @@ CREATE TABLE IF NOT EXISTS `dlmbg_jadwal` (
   `id_penyiar` int(11) NOT NULL,
   `id_acara` int(5) NOT NULL,
   PRIMARY KEY (`id_jadwal`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data untuk tabel `dlmbg_jadwal`
 --
 
 INSERT INTO `dlmbg_jadwal` (`id_jadwal`, `id_waktu`, `id_hari`, `id_penyiar`, `id_acara`) VALUES
-(1, 2, 5, 1, 3);
+(1, 2, 5, 1, 3),
+(2, 4, 3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -295,7 +288,7 @@ INSERT INTO `dlmbg_transaksi_jadwal` (`id_transaksi_jadwal`, `id_transaksi_pemas
 (10, 'PS00000003', 1),
 (9, 'PS00000002', 1),
 (11, 'PS00000004', 0),
-(12, 'PS00000005', 0);
+(12, 'PS00000005', 1);
 
 -- --------------------------------------------------------
 
@@ -316,6 +309,7 @@ CREATE TABLE IF NOT EXISTS `dlmbg_transaksi_pemasangan` (
   `stts` varchar(50) NOT NULL,
   `harga_lain` int(10) NOT NULL,
   `pajak` varchar(10) NOT NULL,
+  `hit_pajak` int(20) NOT NULL,
   PRIMARY KEY (`id_transaksi_pemasangan`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -323,12 +317,12 @@ CREATE TABLE IF NOT EXISTS `dlmbg_transaksi_pemasangan` (
 -- Dumping data untuk tabel `dlmbg_transaksi_pemasangan`
 --
 
-INSERT INTO `dlmbg_transaksi_pemasangan` (`id_transaksi_pemasangan`, `tanggal`, `kode_pelanggan`, `id_tarif_iklan`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka`, `jenis_iklan`, `stts`, `harga_lain`, `pajak`) VALUES
-('PS00000001', '2013-07-13', 35, 1, '23', '3', 100000, 40000, '', '', 0, ''),
-('PS00000002', '2013-07-14', 35, 3, '23', '3', 483000, 93000, 'kontrak', 'Lunas', 7000, ''),
-('PS00000003', '2013-07-20', 33, 3, '45', '5', 1125000, 400000, 'kontrak', 'Belum Lunas', 5000, ''),
-('PS00000004', '', 33, 3, '20', '10', 9900000, 1000000, '0', 'Belum Lunas', 45000, '10'),
-('PS00000005', '', 33, 4, '20', '10', 4800000, 0, '0', 'Belum Lunas', 20000, '5');
+INSERT INTO `dlmbg_transaksi_pemasangan` (`id_transaksi_pemasangan`, `tanggal`, `kode_pelanggan`, `id_tarif_iklan`, `durasi_iklan`, `volume_tayang`, `jumlah_biaya`, `uang_muka`, `jenis_iklan`, `stts`, `harga_lain`, `pajak`, `hit_pajak`) VALUES
+('PS00000001', '2013-07-13', 35, 1, '23', '3', 100000, 40000, '', '', 0, '', 0),
+('PS00000002', '2013-07-14', 35, 3, '23', '3', 483000, 93000, 'kontrak', 'Lunas', 7000, '', 0),
+('PS00000003', '2013-07-20', 33, 3, '45', '5', 1125000, 400000, 'kontrak', 'Belum Lunas', 5000, '', 0),
+('PS00000004', '', 33, 3, '20', '10', 9900000, 1000000, '0', 'Belum Lunas', 45000, '10', 0),
+('PS00000005', '', 33, 4, '10', '2', 440000, 4000000, '0', 'Lunas', 20000, '10', 40000);
 
 -- --------------------------------------------------------
 
